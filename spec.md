@@ -34,8 +34,8 @@ mode is one of:
 `02` - mem <- stdin
 
 #### `03 xx yy zz` - add, val1, val2, mode
-#### `03 xx yy zz` - sub, val1, val2, mode
-#### `03 xx yy zz` - mul, val1, val2, mode
+#### `04 xx yy zz` - sub, val1, val2, mode
+#### `05 xx yy zz` - mul, val1, val2, mode
 Adds/subtracts/multiplys two values and puts result in r1.
 
 mode is one of:
@@ -48,24 +48,24 @@ mode is one of:
 
 `03` - value + value
 
-#### `04 xx 00 00` - prt, val1, null, null
+#### `06 xx 00 00` - prt, val1, null, null
 
 Prints a memory cell to stdout.
 
-#### `05 xx yy zz` - jmp, address part 1, ap2, ap3
+#### `07 xx yy zz` - jmp, address part 1, ap2, ap3
 
 Jumps to spesified block of memory. Parts are concatenatec to form a full address, like so:
 
 `05 00 41 a4` means `jmp to location 0041a4`
-#### `06 xx yy zz` - cmp, val1, val2, mode
+#### `08 xx yy zz` - cmp, val1, val2, mode
 
 Compares two values. See mode table for `add`.
 
-#### `07 xx yy zz` - zjmp, ap1, ap2, ap3
+#### `09 xx yy zz` - zjmp, ap1, ap2, ap3
 
 Jumps if last comparison was zero.
 
-#### `08 xx yy zz` - nzjmp, ap1, ap2, ap3
+#### `0a xx yy zz` - nzjmp, ap1, ap2, ap3
 
 Jumps if last comparison was not zero.
 
