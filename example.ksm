@@ -28,13 +28,13 @@ non-minified:
 02 02 0x1 01 ; block 2
 ;loop
 08 03 0x2 01 ; block 3
-09 0xa 00 00 ; block 4
+09 00 00 0xa ; block 4
 ;mul
 05 03 02 00 ; block 5
 02 02 01 00 ; block 6
 04 03 0x1 01 ; block 7
 02 03 01 00 ; block 8
-07 0x3 00 00 ; block 9
+07 00 00 0x3 ; block 9
 ;done
 06 02 00 00 ; block 10
 
