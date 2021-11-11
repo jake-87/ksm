@@ -56,7 +56,7 @@ Prints a memory cell to stdout.
 
 Jumps to spesified block of memory. Parts are concatenatec to form a full address, like so:
 
-`05 00 41 a4` means `jmp to location 0041a4`
+`07 00 41 a4` means `jmp to location 0041a4`
 #### `08 xx yy zz` - cmp, val1, val2, mode
 
 Compares two values. See mode table for `add`.
