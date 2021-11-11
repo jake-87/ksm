@@ -5,6 +5,7 @@
 ### registers
 
 there are 8 registers: r1 through r8. They are treated as memory locations for all intents and purposes.
+when in binary form, they are 0x1 - 0x8; then other mem continues from there.
 
 ### opcodes
 
