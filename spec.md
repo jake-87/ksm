@@ -68,6 +68,15 @@ Jumps if last comparison was zero.
 
 Jumps if last comparison was not zero.
 
+#### `0b xx yy yy` - movl, val1, val2, val3
+
+Moves the concat of val2 and val3 into the mem adress spesified by val1
+
+e.g.:
+```
+0b r1 0b 10 -> r1 contains value 0b10
+```
+
 ### memory
 
 The VM should have some amount bytes of memory, such that `1024 <= mem_size <= infinity`.
