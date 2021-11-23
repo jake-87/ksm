@@ -4,7 +4,7 @@
 
 ### registers
 
-there are 8 registers: r1 through r8. They are treated as memory locations for all intents and purposes.
+there are 8 registers: r1 through r8. They occupy the reserved memory locations 00 - 07.
 
 ### opcodes
 
@@ -58,7 +58,12 @@ mm -> Mode
 
 0c xx 00 00 -> read arg1 00 00, reads a number or char into arg1
 
-0d xx mm 00 -> hlt arg1 mode, halts with return code arg1 or content of arg1, depending on mode
+0d xx mm 00 -> hlt arg1 mode 00, halts with return code arg1 or content of arg1, depending on mode
+
+0e xx yy zz -> store arg1 arg2 arg3, move content of register r1 into memory address arg1 + arg2 + arg3, see jmp for concat rules
+
+0e xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for concat rules
+
 
 ### memory
 
