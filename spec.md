@@ -21,6 +21,7 @@ If the argument should be left blank, it is signified with zeros.
 ### Modes:
 
 01 - Memory -> memory, reg -> memory, reg -> reg, etc
+
 02 - Literal -> memory, literal -> reg
 
 ### Conventions:
