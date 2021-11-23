@@ -10,33 +10,32 @@ _________________________________________________________
   mov r2, 1  ; answer
  loop:
   cmp r3, 2 ; if counter is two
-  zjmp done ; jump to done
+  jmpz done ; jump to done
   mul r3, r2 ; multiply counter and answer
   mov r2, r1 ; move result back to answer
   sub r3, 1 ; subtract one from counter
   mov r3, r1 ; move counter back to r3
   jmp loop ; jump back to loop
 done:
- prt r2
+ write r2
 
 
 _________________________________________________________
 
 non-minified:
 ;start:
-02 03 01 00 ; block 1
-02 02 0x1 01 ; block 2
-;loop
-08 03 0x2 01 ; block 3
-09 00 00 0xa ; block 4
-;mul
-05 03 02 00 ; block 5
-02 02 01 00 ; block 6
-04 03 0x1 01 ; block 7
-02 03 01 00 ; block 8
-07 00 00 0x3 ; block 9
-;done
-06 02 00 00 ; block 10
+00 03 01 01
+00 02 01 02
+;loop:
+07 03 02 02
+09 00 00 24
+05 03 02 01
+00 02 01 01
+04 03 01 02
+00 03 01 01
+08 00 00 08
+;done:
+0b 02 01 00
 
 minified:
-0203010002020x10108030x201090xa0000050302000202010004030x10102030100070x3000006020000
+0003010100020102070302020900002405030201000201010403010200030101080000080b020100
