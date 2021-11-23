@@ -1,5 +1,7 @@
 # The KSM language spec
 
+Read this in raw mode.
+
 ## part 1: the vm
 
 ### registers
