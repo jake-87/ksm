@@ -6,7 +6,7 @@ Read this in raw mode.
 
 ### registers
 
-there are 8 registers: r1 through r8. They occupy the reserved memory locations 00 - 07.
+there are 8 registers: r1 through r8. They occupy the reserved memory locations 01 - 08, with 00 being the program counter.
 
 ### opcodes
 
