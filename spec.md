@@ -62,9 +62,9 @@ mm -> Mode
 
 0d xx mm 00 -> hlt arg1 mode 00, halts with return code arg1 or content of arg1, depending on mode
 
-0e xx yy zz -> store arg1 arg2 arg3, move content of register r1 into memory address arg1 + arg2 + arg3, see jmp for concat rules
+0e xx yy zz -> store arg1 arg2 arg3, move content of register r1 into memory address arg1 + arg2 + arg3, see jmp for rules
 
-0e xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for concat rules
+0e xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for rules
 
 
 ### memory
