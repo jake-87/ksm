@@ -8,6 +8,11 @@ Read this in raw mode.
 
 there are 8 registers: r1 through r8. They occupy the reserved memory locations 01 - 08, with 00 being the program counter.
 
+### memory
+
+The VM should have some amount bytes of memory, such that `1024 <= mem_size <= infinity`.
+The memory should be at least 32 bits. Any value above this is undefined, and implimentations should not rely on this. Code should not rely on values being zerod when leftshifted.
+
 ### opcodes
 
 Opcodes are formed by a sequence of 8 bytes, like so:
@@ -66,7 +71,18 @@ mm -> Mode
 
 0e xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for rules
 
+0f xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in r1
 
-### memory
+10 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in r1
 
-The VM should have some amount bytes of memory, such that `1024 <= mem_size <= infinity`.
+11 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in r1
+
+12 xx yy zz -> not arg1 arg2 mode, not arg1 with arg2, result in r1
+
+13 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
+
+14 xx yy zz -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
+
+
+
+
