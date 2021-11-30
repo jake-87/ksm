@@ -79,7 +79,7 @@ mm -> Mode
 
 12 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in r1
 
-13 xx yy zz -> not arg1 arg2 mode, not arg1 with arg2, result in r1
+13 xx mm 00 -> not arg1 mode 00, not arg1, result in r1
 
 14 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
 
