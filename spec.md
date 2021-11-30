@@ -31,6 +31,8 @@ If the argument should be left blank, it is signified with zeros.
 
 02 - Literal -> memory, literal -> reg
 
+03 - Literal -> literal ( only for add, multiply, etc )
+
 ### Conventions:
 
 xx, yy, zz -> Arguments
