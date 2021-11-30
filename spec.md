@@ -71,19 +71,19 @@ mm -> Mode
 
 0e xx yy zz -> store arg1 arg2 arg3, move content of register r1 into memory address arg1 + arg2 + arg3, see jmp for rules
 
-0e xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for rules
+0f xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for rules
 
-0f xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in r1
+10 xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in r1
 
-10 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in r1
+11 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in r1
 
-11 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in r1
+12 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in r1
 
-12 xx yy zz -> not arg1 arg2 mode, not arg1 with arg2, result in r1
+13 xx yy zz -> not arg1 arg2 mode, not arg1 with arg2, result in r1
 
-13 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
+14 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
 
-14 xx yy zz -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
+15 xx yy zz -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
 
 
 
