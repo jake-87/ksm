@@ -41,9 +41,9 @@ mm -> Mode
 
 00 xx yy mm -> mov des src mode
 
-01 xx yy mm -> inc src
+01 xx 00 00 -> inc src
 
-02 xx yy mm -> dec src
+02 xx 00 00 -> dec src
 
 03 xx yy mm -> add arg1 arg2 mode, result in r1
 
