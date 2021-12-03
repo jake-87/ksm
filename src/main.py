@@ -7,7 +7,7 @@ def main(argv):
     try:
         file = argv[1]
         try:
-            debug = argv[2]
+            debug = int(argv[2])
         except:
             pass
         try:
