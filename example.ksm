@@ -30,7 +30,7 @@ non-minified:
 00 03 01 01 ; mov
 00 02 01 02 ; mov
 ;loop:
-07 03 02 01 ; cmp
+07 03 01 02 ; cmp
 09 00 00 28 ; jmpz
 05 03 02 01 ; mul
 00 02 01 01 ; mov
@@ -40,5 +40,6 @@ non-minified:
 ;done:
 0b 02 01 00 ; write
 0d 00 03 00 ; hlt
-minified:
-00 01 05 02 00 03 01 01 00 02 01 02 07 03 02 01 09 00 00 28 05 03 02 01 00 02 01 01 04 03 01 02 00 03 01 01 08 00 00 08 0b 02 01 00 0d 00 03 00
+
+script to minify non minified version:
+sed --in-place "s/\;.*//g" $1 && sed "s/[[:space:]]*//g" --in-place $1 && tr --delete '\n' < $1 | cat > example-fixed.ksm
