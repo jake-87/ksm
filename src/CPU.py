@@ -2,7 +2,7 @@ class cpu:
     def __init__(self, memsize):
         self.mem = [0 for i in range(memsize)]
         self.cmp = 0
-        self.special = ["08", "09", "0a", "0e", "0f"]
+        self.special = ["08", "09", "0a", "0d", "0e", "0f"]
         self.op = {
             "00": self.__op00,
             "01": self.__op01,
@@ -90,8 +90,10 @@ class cpu:
         self.mem[arg1] = input(">")
     def __op0d(self, arg1, arg2, arg3):
         if arg2 == 1:
+            print("0d", arg1, arg2, str(arg3) + ": HALT")
             exit(self.mem[arg1])
         else:
+            print("0d", arg1, arg2, str(arg3) + ": HALT")
             exit(arg1)
     def __op0e(self, arg1, arg2, arg3):
         self.mem[int(arg1 + arg2 + arg3, 16)] = self.mem[1]
