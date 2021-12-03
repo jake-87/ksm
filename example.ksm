@@ -31,7 +31,7 @@ non-minified:
 00 02 01 02 ; mov
 ;loop:
 07 03 01 02 ; cmp
-09 00 00 28 ; jmpz
+09 00 00 24 ; jmpz
 05 03 02 01 ; mul
 00 02 01 01 ; mov
 04 03 01 02 ; sub
@@ -42,4 +42,7 @@ non-minified:
 0d 00 03 00 ; hlt
 
 script to minify non minified version:
-sed --in-place "s/\;.*//g" $1 && sed "s/[[:space:]]*//g" --in-place $1 && tr --delete '\n' < $1 | cat > example-fixed.ksm
+sed --in-place "s/\;.*//g" $1 && sed "s/[[:space:]]*//g" --in-place $1 && tr --delete '\n' < $1
+put in file, make executeable, then run like this:
+./fix.sh non-minified-version
+and it'll spit out a fixed version to stout
