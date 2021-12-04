@@ -41,8 +41,15 @@ non-minified:
 0b 02 01 00 ; write
 0d 00 03 00 ; hlt
 
-script to minify non minified version:
+
+minified version:
+
+000105020003010100020102070301020900002405030201000201010403010200030101080000080b0201000d000300
+
+script to minify a non minified version:
 sed --in-place "s/\;.*//g" $1 && sed "s/[[:space:]]*//g" --in-place $1 && tr --delete '\n' < $1
 put in file, make executeable, then run like this:
 ./fix.sh non-minified-version
 and it'll spit out a fixed version to stout
+!! WARNING !!
+This process is destructive, make backups

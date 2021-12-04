@@ -6,7 +6,7 @@ Read this in raw mode.
 
 ### registers
 
-there are 8 registers: r1 through r8. They occupy the reserved memory locations 01 - 08, with 00 being the program counter.
+the vm does not have the concert of registers; however, 01 is where many operators place output, and 00 is the program counter.
 
 ### memory
 
@@ -27,9 +27,9 @@ If the argument should be left blank, it is signified with zeros.
 
 ### Modes:
 
-01 - Memory -> memory, reg -> memory, reg -> reg, etc
+01 - Memory -> memory 
 
-02 - Literal -> memory, literal -> reg
+02 - Literal -> memory,
 
 03 - Literal -> literal ( only for add, multiply, etc )
 
@@ -47,13 +47,13 @@ mm -> Mode
 
 02 xx 00 00 -> dec src
 
-03 xx yy mm -> add arg1 arg2 mode, result in r1
+03 xx yy mm -> add arg1 arg2 mode, result in memory address 01
 
-04 xx yy mm -> sub arg1 arg2 mode, result in r1
+04 xx yy mm -> sub arg1 arg2 mode, result in memory address 01
 
-05 xx yy mm -> mul arg1 arg2 mode, result in r1
+05 xx yy mm -> mul arg1 arg2 mode, result in memory address 01
 
-06 xx yy mm -> div arg1 arg2 mode, result in r1
+06 xx yy mm -> div arg1 arg2 mode, result in memory address 01
 
 07 xx yy mm -> cmp arg1 arg2 mode
 
@@ -69,17 +69,17 @@ mm -> Mode
 
 0d xx mm 00 -> hlt arg1 mode 00, halts with return code arg1 or content of arg1, depending on mode
 
-0e xx yy zz -> store arg1 arg2 arg3, move content of register r1 into memory address arg1 + arg2 + arg3, see jmp for rules
+0e xx yy zz -> store arg1 arg2 arg3, move content of memory address 01 into memory address arg1 + arg2 + arg3, see jmp for rules
 
-0f xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into register r1, see jmp for rules
+0f xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into memory address 01, see jmp for rules
 
-10 xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in r1
+10 xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in memory address 01
 
-11 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in r1
+11 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in memory address 01
 
-12 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in r1
+12 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in memory address 01
 
-13 xx mm 00 -> not arg1 mode 00, not arg1, result in r1
+13 xx mm 00 -> not arg1 mode 00, not arg1, result in memory address 01
 
 14 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
 
