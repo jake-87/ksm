@@ -15,11 +15,13 @@ The memory should be at least 32 bits. Any value above this is undefined, and im
 
 ### opcodes
 
-Opcodes are formed by a sequence of 8 bytes, like so:
+Opcodes are formed by a sequence of 8 or 16 bytes, like so:
 
 `02 b7 55 00`
 
-The first is the opcode, the other three are operands.
+`16 00 10 22 02 ab 2a a3`
+
+The first is the opcode, the other three or seven are operands.
 
 ### types of opcodes
 
@@ -85,6 +87,8 @@ mm -> Mode
 
 15 xx yy zz -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
 
+16 yy yy yy -> movl arg1 arg2 arg3, move concat value of yy yy yy into memory address 01. See jmp for concat rules
 
+17 xx yy 00 -> lfa arg1 arg2 null, move content of memory location spesified by value of arg2 into arg1, eg:
 
-
+`lfa 01 03 00, if 03 contains the value 05, moves the value of memory location 05 into 01.`
