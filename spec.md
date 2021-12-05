@@ -91,4 +91,8 @@ mm -> Mode
 
 17 xx yy 00 -> lfa arg1 arg2 null, move content of memory location spesified by value of arg2 into arg1, eg:
 
-`lfa 01 03 00, if 03 contains the value 05, moves the value of memory location 05 into 01.`
+`07 01 03 00, if 03 contains the value 05, moves the value of memory location 05 into 01.`
+
+18 xx yy mm -> lta arg1 arg2 mode, move content of memory location arg2 into memory location spesified by arg1, eg:
+
+`08 01 03 01, if 01 contains the value 05, moves the value of memory location 03 into 05.`
