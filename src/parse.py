@@ -29,11 +29,10 @@ def parse(file, debug=0, memory = 16):
                     print(n.ljust(conf.ljust), end=" ")
                 print(" | ", hex(cpu.cmp))
             if pr:
-                ifexit = "dontexit"
-                try:
-                    ifexit = pr[0]
-                except:
-                    pr()
-                if ifexit != "dontexit":
+                check = "dontexit"
+                check = pr[0]
+                if check == "exit":
                     exit(pr[1])
+                if check == "print":
+                    print(pr[1])
             cpu.mem[0] += 1
