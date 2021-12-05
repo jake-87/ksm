@@ -149,7 +149,7 @@ class cpu:
     def __op17(self, arg1, arg2, arg3):
         self.mem[arg1] = self.mem[self.mem[arg2]]
     def __op18(self, arg1, arg2, arg3):
-        if arg3 == 01:
+        if arg3 == 1:
             self.mem[self.mem[arg1]] = self.mem[arg2]
         else:
             self.mem[self.mem[arg1]] = arg2
