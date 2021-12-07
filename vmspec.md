@@ -1,19 +1,15 @@
 # The KSM language spec
 
-Read this in raw mode.
-
-## part 1: the vm
-
-### registers
+## registers
 
 the vm does not have the concert of registers; however, 01 is where many operators place output, and 00 is the program counter.
 
-### memory
+## memory
 
 The VM should have some amount bytes of memory, such that `1024 <= mem_size <= infinity`.
 The memory should be at least 32 bits. Any value above this is undefined, and implimentations should not rely on this. Code should not rely on values being zerod when leftshifted.
 
-### opcodes
+## opcodes
 
 Opcodes are formed by a sequence of 8 or 16 bytes, like so:
 
@@ -23,11 +19,11 @@ Opcodes are formed by a sequence of 8 or 16 bytes, like so:
 
 The first is the opcode, the other three or seven are operands.
 
-### types of opcodes
+## types of opcodes
 
 If the argument should be left blank, it is signified with zeros.
 
-### Modes:
+## Modes:
 
 01 - Memory -> memory 
 
@@ -35,13 +31,15 @@ If the argument should be left blank, it is signified with zeros.
 
 03 - Literal -> literal ( only for add, multiply, etc )
 
-### Conventions:
+## Conventions:
 
 xx, yy, zz -> Arguments
 
 mm -> Mode
 
 ## Opcodes
+
+Please do *not* use the `mov des src mode` as actual text opcodes, for that, see AssemblerSpec.md.
 
 00 xx yy mm -> mov des src mode
 
@@ -91,8 +89,8 @@ mm -> Mode
 
 17 xx yy 00 -> lfa arg1 arg2 null, move content of memory location spesified by value of arg2 into arg1, eg:
 
-`07 01 03 00, if 03 contains the value 05, moves the value of memory location 05 into 01.`
+`17 01 03 00, if 03 contains the value 05, moves the value of memory location 05 into 01.`
 
 18 xx yy mm -> lta arg1 arg2 mode, move content of memory location arg2 into memory location spesified by arg1, eg:
 
-`08 01 03 01, if 01 contains the value 05, moves the value of memory location 03 into 05.`
+`18 01 03 01, if 01 contains the value 05, moves the value of memory location 03 into 05.`
