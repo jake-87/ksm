@@ -1,2 +1,3 @@
 # ksm
-Specs and example of the KSM programming language
+
+Specs and example of the KSM programming language.
