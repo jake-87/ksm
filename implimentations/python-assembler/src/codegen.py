@@ -10,13 +10,13 @@ def hexfix(mhex):
     if ":" in mhex:
         return (mhex, 0)
     if mhex[0].lower() == "m":
-        ismem = 1
+        ismem = "1"
     else:
-        ismem = 0
+        ismem = "0"
     mhex = mhex.replace("m", "")
     if "x" in mhex:
-        return (int(mhex, 16), ismem)
-    return (int(mhex), ismem)
+        return (hex(int(mhex, 16)).replace("0x", ""), ismem)
+    return (hex(int(mhex)).replace("0x", ""), ismem)
 
 def getmode(arg1, arg2):
     # Return a mode, based on the mode table
@@ -26,39 +26,53 @@ def getmode(arg1, arg2):
         return 2
     if not arg1 and not arg2:
         return 3
-    raise Error("Invalid mode")
+    raise SyntaxError("Invalid mode")
 
 def assemble_op(op, arg1, arg2, mode):
     # Assemble an opcode.
     global lable_iter_dict
     global lable_iter
     k = dict_ksm.k
+    final_op = str(dict_ksm.opd[op]).replace("0x", "").zfill(2)
     if op in k[0]: # Using a lable
         if arg1 in lable_iter_dict:
             pass
         else:
-            lable_iter_dict[arg1] = hex(lable_iter).replace("0x", "").zfill(6)
+            lable_iter_dict[arg1[0:-1]] = hex(lable_iter).replace("0x", "").zfill(6)
             lable_iter += 1
-        return op + lable_iter_dict[arg1]
+        return final_op.zfill(2) + lable_iter_dict[arg1[0:-1]]
     if op in k[1]:
-        return op + arg1.zfill(2) + "".zfill(4)
+        return final_op.zfill(2) + arg1.zfill(2) + "".zfill(4)
     if op in k[2]:
-        return op + hex(int(arg1)).replace("0x", "").zfill(6)
+        return final_op.zfill(2) + arg1.zfill(6)
+    if op in k[3]:
+        return final_op.zfill(2) + arg1.zfill(2) + mode.zfill(2) + "00"
+    if op in k[4]:
+        return final_op.zfill(2) + arg1.zfill(2) + arg2.zfill(2) + "00"
+    else:
+        return final_op.zfill(2) + arg1.zfill(2) + arg2.zfill(2) + mode.zfill(2)
+
 class codegenerator():
     def __init__(self, tok_mast):
         self.ast = tok_mast
         self.lablere = re.compile("^[^\:]+:")
-    def gencode_ksm(self):
+    def gencode_ksm(self, debug = False):
+        global lable_iter_dict
+        global lable_iter
         mast = self.ast.get_tok()
-        i = 1
+        i = 1 # Counter for debug
+        semi_final_opcodes = []
         for k in mast:
+            # For each token
             op = k[0]
-            op = str(dict_ksm.opd[op]).replace("0x", "").zfill(2)
             if self.lablere.match(op):
                 # Lable
-                print("Lable", i, ":", op[0 : -1])
+                if debug:
+                    print(i, ": Lable", ":", op)
                 i += 1
+                semi_final_opcodes.append(op)
                 continue
+            # Not lable
             arg1, arg2 = 0,0
             try:
                 arg1 = k[1]
@@ -66,11 +80,69 @@ class codegenerator():
             except IndexError:
                 # Only has one arg
                 arg1 = k[1]
-            print("OP code", i, ":", op, arg1, arg2 if arg2 else "")
-            i += 1
-            arg1, arg1mem = hexfix(arg1)
-            if arg2:
-                arg2, arg2mem = hexfix(arg2)
+            if debug:
+                print(i, ": OP code", ":", op, arg1, arg2 if arg2 else "")
+            
+            if op not in dict_ksm.k[0]:
+                arg1, arg1mem = hexfix(arg1)
+                if arg2:
+                    arg2, arg2mem = hexfix(arg2)
+            
             # Get the proper mode
             mode = getmode(arg1mem, arg2mem if arg2mem else 0)
-            final = assemble_op(op, arg1, arg2 if arg2 else None, mode)
+            # Assemble the opcode
+            final_op = assemble_op(op, str(arg1), str(arg2) if arg2 else None, str(mode))
+            semi_final_opcodes.append(final_op)
+            if debug:
+                print(i, ": Assembled OP code", ":", final_op)
+            
+            
+            i += 1
+        if debug:
+            print("Semi-final OP codes: ", semi_final_opcodes)
+        # <--------------------------------BROKEN-------------------------------->
+        preprocess_ops = {}
+        counter = 0
+        for each in semi_final_opcodes:
+            if self.lablere.match(each):
+                # It's a lable
+                if each in lable_iter_dict:
+                    pass
+                else:
+                    # Add it to lable_iter_dict
+                    lable_iter_dict[each[0:-1]] = hex(lable_iter).replace("0x", "").zfill(6)
+                    lable_iter += 1
+                preprocess_ops[each] = lable_iter_dict[each[0:-1]] + ":"
+                continue
+            # It's a normal instruction, add it to preprocess
+            preprocess_ops[each] = counter
+            print(counter, each, preprocess_ops)
+            counter += 4
+        final_ops = []
+        
+        if debug:
+            print("Preprocessing ops:", preprocess_ops)
+        for each in preprocess_ops:
+            # If each uses a lable
+            final = ""
+            if each[0:2] in dict_ksm.k[0]:
+                # Everything except the first two letters
+                # Eg: 05ab14dc
+                #   ->  ab15dc
+                op = each[0:2]
+                ins = each[2:-1]
+                lable_name = ""
+                for part in lable_iter_dict:
+                    if lable_iter_dict[part] == ins:
+                        lable_name = part
+                        break
+                final = op + lable_iter_dict[lable_name].zfill(6)
+            else:
+                final = each
+            if not self.lablere.match(each):
+                print(each[0:2], "doesnt match")
+                final_ops.append(final)
+        # <--------------------------------BROKEN-------------------------------->
+        if debug:
+            print("Final OP codes:", final_ops)
+        print("".join(final_ops))

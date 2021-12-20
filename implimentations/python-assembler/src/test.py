@@ -10,9 +10,14 @@ def main():
             loop:
             dec
             m0x1
+            second_loop:
             mov
             m0x1
-            10""")
+            10
+            jmp
+            loop
+            inc m0xFF
+            jmpnz second_loop""")
     myast.tokenize(dict_ksm.d)
     mycodegen = codegen.codegenerator(myast)
     mycodegen.gencode_ksm()

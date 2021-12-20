@@ -34,6 +34,7 @@ k = [
         [ # Class 1: Mem loc
             "inc",
             "dec",
+            "read",
         ],
         [ # Class 2: Expandable
             "store",
@@ -43,6 +44,7 @@ k = [
         [ # Class 3: One arg
             "hlt",
             "not",
+            "write",
         ],
         [ # Class 4: Two args, no mode
             "lfa"
