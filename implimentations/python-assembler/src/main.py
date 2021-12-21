@@ -19,5 +19,6 @@ def main():
     myast.parse(data)
     myast.tokenize(dict_ksm.d, debug)
     mycodegen = codegen.codegenerator(myast)
-    mycodegen.gencode_ksm(debug)
+    ret = mycodegen.gencode_ksm(debug)
+    print(ret)
 main()

@@ -25,6 +25,11 @@ d = { # Number of args for each op
     "lfa": 2,
     "lta": 2,
 }
+jmps = [
+    "08",
+    "09",
+    "0a",
+]
 k = [
         [ # Class 0: Lable
             "jmp",
