@@ -112,7 +112,6 @@ class codegenerator():
                 count += 4
             else:
                 final_lables[lable_iter_dict[each[0:-1]]] = count - 4
-            print(each, count)
         if debug:
            print("Semi-final OP codes: ", semi_final_opcodes)
            print("Lables: ", final_lables)
