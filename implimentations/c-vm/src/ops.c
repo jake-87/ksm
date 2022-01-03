@@ -85,10 +85,10 @@ IVO(0a) (CPU, int64_t concat) {
 }
 IVO(0b) (CPU, ARGS) {
     if (a2 == 01) {
-        printf("%c0x%lx\n", cpu->mem[a1] < 0 ? '-' : '+', (uint64_t) labs(cpu->mem[a1]));
+        printf("%c0x%lx\n", cpu->mem[a1] < 0 ? '-' : ' ', (uint64_t) labs(cpu->mem[a1]));
     }
     else {
-        printf("%c0x%lx\n",a1 < 0 ? '-' : '+', (uint64_t) labs(a1));
+        printf("%c0x%lx\n",a1 < 0 ? '-' : ' ', (uint64_t) labs(a1));
     }
 }
 IVO(0c) (CPU, ARGS) {

@@ -111,12 +111,15 @@ int parse(FILE * fp, int debug, int64_t memsize) {
         else {
             op_table[op_int](&main_cpu, a1_int, a2_int, a3_int);
         }
+        char * tmp = malloc(sizeof(char) * 24);
         if (debug) {
             printf("%s %s %s %s ", op, a1, a2, a3);
             for (int64_t i = 0; i < memsize; i++) {
-                printf("%c0x%11lx\n", a1 < 0 ? '-' : '+', (uint64_t)labs(main_cpu.mem[i]));
+                snprintf(tmp, 24, "%c0x%lx ", main_cpu.mem[i] < 0 ? '-' : ' ', (uint64_t)labs(main_cpu.mem[i]));
+                printf("%11s ", tmp);
             }
-            printf("\n");
+            snprintf(tmp, 24, "%c0x%lx ", main_cpu.cmp < 0 ? '-' : ' ', (uint64_t)labs(main_cpu.cmp));
+            printf("%s\n", tmp);
         }
         main_cpu.mem[0]++;
     }
