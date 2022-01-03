@@ -7,7 +7,7 @@ the vm does not have the concert of registers; however, 01 is where many operato
 ## memory
 
 The VM should have some amount bytes of memory, such that `1024 <= mem_size <= infinity`.
-The memory should be at least 32 bits. Any value above this is undefined, and implimentations should not rely on this. Code should not rely on values being zerod when leftshifted.
+The memory should be at least 64 bits. Any value above this is undefined, and implimentations should not rely on this. Code should not rely on values being zerod when leftshifted.
 
 ## opcodes
 
