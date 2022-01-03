@@ -14,7 +14,6 @@ typedef struct _cpu_t {
 #define a3_1 if ((a3) == 1)
 #define a3_2 if ((a3) == 2)
 // special opcodes
-//char * special_chars[] = {"08", "09", "0a", "0d", "0e", "0f", "15"};
 // macros ftw 
 IVO(00) (CPU, ARGS);
 IVO(01) (CPU, ARGS);

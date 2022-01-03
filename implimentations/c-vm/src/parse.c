@@ -1,6 +1,7 @@
 #include "includes/libs.h"
 #include "includes/ops.h"
 #include "includes/parse.h"
+// pointers to the ops functions
 void (*op_table[])() = {
     op00,
     op01,
@@ -28,6 +29,9 @@ void (*op_table[])() = {
     op17,
     op18,
 };
+char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15"};
+int32_t special_ins_size = 7;
+// read a file into a file_string_t
 file_string_t read_file(FILE * fp) {
     char ch;
     file_string_t fs;
@@ -45,6 +49,13 @@ file_string_t read_file(FILE * fp) {
     fs.size = counter;
     return fs;
 }
+// inline functions to get instruction index
+inline int64_t ins_index(int64_t x, int64_t y) {
+    return x * 8 + y;
+}
+void slice_str(const char * str, char * output, size_t start, size_t end) {
+    strncpy(output, str + start, end - start);
+}
 int parse(FILE * fp, int debug, int64_t memsize) {
     if (fp == NULL) {
         fprintf(stderr, "Couldn't open file\n");
@@ -52,5 +63,10 @@ int parse(FILE * fp, int debug, int64_t memsize) {
     }
     file_string_t fs = read_file(fp);
     printf("%s\n %ld\n", fs.ins, fs.size);
+    cpu_t main_cpu;
+    main_cpu.mem = malloc(sizeof(int64_t) * memsize);
+    while (1) {
+
+    }
     return 0;
 }

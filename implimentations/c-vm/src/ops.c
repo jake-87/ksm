@@ -1,5 +1,6 @@
 #include "includes/libs.h"
 #include "includes/ops.h"
+// instructions for vm, see header for macros
 IVO(00) (CPU, ARGS) {
     a3_1 {
         cpu->mem[a1] = cpu->mem[a2];
