@@ -31,6 +31,17 @@ void (*op_table[])() = {
 };
 char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15"};
 int32_t special_ins_size = 7;
+// test if string in array
+// TODO: Can this be inlined?
+int8_t in_strarr(char ** strarr, int32_t size, char * tst) {
+    for (int i = 0; i < size; i++) {
+        if (strcmp(strarr[i], tst) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 // read a file into a file_string_t
 file_string_t read_file(FILE * fp) {
     char ch;
@@ -68,22 +79,40 @@ int parse(FILE * fp, int debug, int64_t memsize) {
     main_cpu.mem = malloc(sizeof(int64_t) * memsize);
     main_cpu.mem[0] = 0;
     while (1) {
+        if (main_cpu.mem[0] * 8 >= fs.size) { 
+            fprintf(stderr, "Program exited unexpectedly\n");
+            exit(1);
+        }
         // vars
+        // TODO: make this a function or something, because geeez it's big
         char * op = malloc(sizeof(char) * 3);
         char * a1 = malloc(sizeof(char) * 3);
         char * a2 = malloc(sizeof(char) * 3);
         char * a3 = malloc(sizeof(char) * 3);
         char * concat = malloc(sizeof(char) * 9);
-        // get everything in place
         slice_str(fs.ins, op, iidex(main_cpu.mem[0], 0), iidex(main_cpu.mem[0], 2));
         slice_str(fs.ins, a1, iidex(main_cpu.mem[0], 2), iidex(main_cpu.mem[0], 4));
         slice_str(fs.ins, a2, iidex(main_cpu.mem[0], 4), iidex(main_cpu.mem[0], 6));
         slice_str(fs.ins, a3, iidex(main_cpu.mem[0], 6), iidex(main_cpu.mem[0], 8));
-        if (main_cpu.mem[0] * 8 >= fs.size) { 
-            fprintf(stderr, "Program exited unexpectedly\n");
-            exit(1);
+        strcat(concat, op);
+        strcat(concat, a1);
+        strcat(concat, a2);
+        strcat(concat, a3);
+        printf("%s\n", concat);
+        int64_t op_int;
+        int64_t a1_int;
+        int64_t a2_int;
+        int64_t a3_int;
+        sscanf(op, "%ld", &op_int);
+        sscanf(a1, "%ld", &a1_int);
+        sscanf(a2, "%ld", &a2_int);
+        sscanf(a3, "%ld", &a3_int);
+        if (in_strarr(special_ins, special_ins_size, op)) {
+            // TODO: call special
         }
-        sscanf(concat, "%s%s%s%s", op, a1, a2, a3);
+        else {
+            // TODO: call normal
+        }
         main_cpu.mem[0]++;
     }
     return 0;
