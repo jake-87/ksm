@@ -5,6 +5,7 @@ typedef struct _file_string_t {
     char * ins;
     int64_t size;
 } file_string_t;
+inline int64_t iidex(int64_t x, int64_t y);
 void slice_str(const char * str, char * output, size_t start, size_t end);
 file_string_t read_file(FILE * fp);
 int parse(FILE * fp, int debug, int64_t memsize);

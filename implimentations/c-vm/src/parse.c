@@ -49,10 +49,12 @@ file_string_t read_file(FILE * fp) {
     fs.size = counter;
     return fs;
 }
+
 // inline functions to get instruction index
-inline int64_t ins_index(int64_t x, int64_t y) {
+inline int64_t iidex(int64_t x, int64_t y) {
     return x * 8 + y;
 }
+// slice string
 void slice_str(const char * str, char * output, size_t start, size_t end) {
     strncpy(output, str + start, end - start);
 }
@@ -62,11 +64,27 @@ int parse(FILE * fp, int debug, int64_t memsize) {
         exit(1);
     }
     file_string_t fs = read_file(fp);
-    printf("%s\n %ld\n", fs.ins, fs.size);
     cpu_t main_cpu;
     main_cpu.mem = malloc(sizeof(int64_t) * memsize);
+    main_cpu.mem[0] = 0;
     while (1) {
-
+        // vars
+        char * op = malloc(sizeof(char) * 3);
+        char * a1 = malloc(sizeof(char) * 3);
+        char * a2 = malloc(sizeof(char) * 3);
+        char * a3 = malloc(sizeof(char) * 3);
+        char * concat = malloc(sizeof(char) * 9);
+        // get everything in place
+        slice_str(fs.ins, op, iidex(main_cpu.mem[0], 0), iidex(main_cpu.mem[0], 2));
+        slice_str(fs.ins, a1, iidex(main_cpu.mem[0], 2), iidex(main_cpu.mem[0], 4));
+        slice_str(fs.ins, a2, iidex(main_cpu.mem[0], 4), iidex(main_cpu.mem[0], 6));
+        slice_str(fs.ins, a3, iidex(main_cpu.mem[0], 6), iidex(main_cpu.mem[0], 8));
+        if (main_cpu.mem[0] * 8 >= fs.size) { 
+            fprintf(stderr, "Program exited unexpectedly\n");
+            exit(1);
+        }
+        sscanf(concat, "%s%s%s%s", op, a1, a2, a3);
+        main_cpu.mem[0]++;
     }
     return 0;
 }
