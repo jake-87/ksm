@@ -119,7 +119,7 @@ int parse(FILE * fp, int debug, int64_t memsize) {
                 printf("%11s ", tmp);
             }
             snprintf(tmp, 24, "%c0x%lx ", main_cpu.cmp < 0 ? '-' : ' ', (uint64_t)labs(main_cpu.cmp));
-            printf("%s\n", tmp);
+            printf(" | %s\n", tmp);
         }
         main_cpu.mem[0]++;
     }
