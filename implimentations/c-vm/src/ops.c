@@ -71,24 +71,24 @@ IVO(07) (CPU, ARGS) {
     }
 }
 IVO(08) (CPU, int64_t concat) {
-    cpu->mem[00] = concat;
+    cpu->mem[00] = concat / 4;
 }
 IVO(09) (CPU, int64_t concat) {
     if (!cpu->cmp) {
-        cpu->mem[00] = concat;
+        cpu->mem[00] = concat / 4;
     }
 }
 IVO(0a) (CPU, int64_t concat) {
     if (cpu->cmp) {
-        cpu->mem[00] = concat;
+        cpu->mem[00] = concat / 4;
     }
 }
 IVO(0b) (CPU, ARGS) {
     if (a2 == 01) {
-        printf("%c%lx", cpu->mem[a1] < 0 ? '-' : '+', (uint64_t) labs(cpu->mem[a1]));
+        printf("%c0x%lx\n", cpu->mem[a1] < 0 ? '-' : '+', (uint64_t) labs(cpu->mem[a1]));
     }
     else {
-        printf("%c%lx",a1 < 0 ? '-' : '+', (uint64_t) labs(a1));
+        printf("%c0x%lx\n",a1 < 0 ? '-' : '+', (uint64_t) labs(a1));
     }
 }
 IVO(0c) (CPU, ARGS) {

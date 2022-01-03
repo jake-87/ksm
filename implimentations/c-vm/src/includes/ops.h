@@ -12,7 +12,7 @@ typedef struct _cpu_t {
 #define CPU cpu_t * cpu
 // makes stuff quicker
 #define a3_1 if ((a3) == 1)
-#define a3_2 if ((a3) == 2)
+#define a3_2 else if ((a3) == 2)
 // special opcodes
 // macros ftw 
 IVO(00) (CPU, ARGS);

@@ -94,26 +94,32 @@ int parse(FILE * fp, int debug, int64_t memsize) {
         slice_str(fs.ins, a1, iidex(main_cpu.mem[0], 2), iidex(main_cpu.mem[0], 4));
         slice_str(fs.ins, a2, iidex(main_cpu.mem[0], 4), iidex(main_cpu.mem[0], 6));
         slice_str(fs.ins, a3, iidex(main_cpu.mem[0], 6), iidex(main_cpu.mem[0], 8));
-        strcat(concat, op);
-        strcat(concat, a1);
-        strcat(concat, a2);
-        strcat(concat, a3);
-        printf("%s\n", concat);
-        int64_t op_int;
-        int64_t a1_int;
-        int64_t a2_int;
-        int64_t a3_int;
-        sscanf(op, "%ld", &op_int);
-        sscanf(a1, "%ld", &a1_int);
-        sscanf(a2, "%ld", &a2_int);
-        sscanf(a3, "%ld", &a3_int);
+        snprintf(concat, 8, "%s%s%s", a1, a2, a3);
+        uint64_t op_int;
+        uint64_t a1_int;
+        uint64_t a2_int;
+        uint64_t a3_int;
+        uint64_t concat_int;
+        sscanf(op, "%lx", &op_int);
+        sscanf(a1, "%lx", &a1_int);
+        sscanf(a2, "%lx", &a2_int);
+        sscanf(a3, "%lx", &a3_int);
+        sscanf(concat, "%lx", &concat_int);
         if (in_strarr(special_ins, special_ins_size, op)) {
-            // TODO: call special
+            op_table[op_int](&main_cpu, concat_int);
         }
         else {
-            // TODO: call normal
+            op_table[op_int](&main_cpu, a1_int, a2_int, a3_int);
+        }
+        if (debug) {
+            printf("%s %s %s %s ", op, a1, a2, a3);
+            for (int64_t i = 0; i < memsize; i++) {
+                printf("%c0x%11lx\n", a1 < 0 ? '-' : '+', (uint64_t)labs(main_cpu.mem[i]));
+            }
+            printf("\n");
         }
         main_cpu.mem[0]++;
     }
+    printf("\n");
     return 0;
 }
