@@ -66,7 +66,7 @@ inline int64_t iidex(int64_t x, int64_t y) {
     return x * 8 + y;
 }
 // slice string
-void slice_str(const char * str, char * output, size_t start, size_t end) {
+inline void slice_str(const char * str, char * output, size_t start, size_t end) {
     strncpy(output, str + start, end - start);
 }
 int parse(FILE * fp, int debug, int64_t memsize) {
