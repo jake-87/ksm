@@ -76,20 +76,19 @@ int parse(FILE * fp, int debug, int64_t memsize) {
     }
     file_string_t fs = read_file(fp);
     cpu_t main_cpu;
-    main_cpu.mem = malloc(sizeof(int64_t) * memsize);
+    main_cpu.cmp = 0;
+    main_cpu.mem = calloc(sizeof(int64_t) * memsize, 1);
     main_cpu.mem[0] = 0;
+    char * op = malloc(sizeof(char) * 3);
+    char * a1 = malloc(sizeof(char) * 3);
+    char * a2 = malloc(sizeof(char) * 3);
+    char * a3 = malloc(sizeof(char) * 3);
+    char * concat = malloc(sizeof(char) * 9);
     while (1) {
         if (main_cpu.mem[0] * 8 >= fs.size) { 
             fprintf(stderr, "Program exited unexpectedly\n");
             exit(1);
-        }
-        // vars
-        // TODO: make this a function or something, because geeez it's big
-        char * op = malloc(sizeof(char) * 3);
-        char * a1 = malloc(sizeof(char) * 3);
-        char * a2 = malloc(sizeof(char) * 3);
-        char * a3 = malloc(sizeof(char) * 3);
-        char * concat = malloc(sizeof(char) * 9);
+        }    
         slice_str(fs.ins, op, iidex(main_cpu.mem[0], 0), iidex(main_cpu.mem[0], 2));
         slice_str(fs.ins, a1, iidex(main_cpu.mem[0], 2), iidex(main_cpu.mem[0], 4));
         slice_str(fs.ins, a2, iidex(main_cpu.mem[0], 4), iidex(main_cpu.mem[0], 6));
@@ -111,8 +110,8 @@ int parse(FILE * fp, int debug, int64_t memsize) {
         else {
             op_table[op_int](&main_cpu, a1_int, a2_int, a3_int);
         }
-        char * tmp = malloc(sizeof(char) * 24);
         if (debug) {
+            char * tmp = malloc(sizeof(char) * 24);
             printf("%s %s %s %s ", op, a1, a2, a3);
             for (int64_t i = 0; i < memsize; i++) {
                 snprintf(tmp, 24, "%c0x%lx ", main_cpu.mem[i] < 0 ? '-' : ' ', (uint64_t)labs(main_cpu.mem[i]));
@@ -120,9 +119,15 @@ int parse(FILE * fp, int debug, int64_t memsize) {
             }
             snprintf(tmp, 24, "%c0x%lx ", main_cpu.cmp < 0 ? '-' : ' ', (uint64_t)labs(main_cpu.cmp));
             printf(" | %s\n", tmp);
+            free(tmp);
         }
         main_cpu.mem[0]++;
     }
+    free(op);
+    free(a1);
+    free(a2);
+    free(a3);
+    free(main_cpu.mem);
     printf("\n");
     return 0;
 }

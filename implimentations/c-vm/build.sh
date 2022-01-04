@@ -4,3 +4,4 @@ CARGS="$CARGS -Wno-unused-parameter -Wno-stringop-truncation -Wno-string-concate
 CARGS="$CARGS -Wno-unknown-warning-option -Wno-newline-eof"
 CC=cc
 $CC src/*.c -o output $CARGS
+./output ../../examples/ex1.ksm 4 1

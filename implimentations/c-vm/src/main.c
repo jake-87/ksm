@@ -21,5 +21,6 @@ int main(int argc, char ** argv) {
     }
     parse(fp, debug, memsize);
     printf("done %d %p %ld\n",debug, (void *)fp, memsize);
+    fclose(fp);
     return 0;
 }

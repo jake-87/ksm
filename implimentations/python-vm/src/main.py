@@ -1,7 +1,6 @@
 import parse
 import sys
 def main(argv):
-    print(argv)
     debug = 0
     memory = 16
     try:
