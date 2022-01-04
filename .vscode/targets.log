@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jan  4 15:12:18 2022
+# Make data base, printed on Tue Jan  4 19:41:39 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-06595a53-e50a-49e1-9543-a1a573b599d6.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-d6d7761e-50ff-4e42-9d3f-9151a0fdde82.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -91,7 +91,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 18599
+VSCODE_PID = 19852
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -191,9 +191,9 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 
 # Directories
 
-# . (device 66306, inode 3540408): 11 files, no impossibilities.
+# . (device 66306, inode 3540408): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -243,12 +243,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 180 B / avg = 9 B
-# current buf: size = 8162 B / used = 180 B / count = 19 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 20 / storage = 191 B / avg = 9 B
+# current buf: size = 8162 B / used = 191 B / count = 20 / avg = 9 B
 
-# strcache performance: lookups = 22 / hit rate = 13%
+# strcache performance: lookups = 23 / hit rate = 13%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
-# Finished Make data base on Tue Jan  4 15:12:18 2022
+# Load=20/8192=0%, Rehash=0, Collisions=0/23=0%
+# Finished Make data base on Tue Jan  4 19:41:39 2022
 
  
