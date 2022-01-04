@@ -11,13 +11,12 @@ The memory should be at least 64 bits. Any value above this is undefined, and im
 
 ## opcodes
 
-Opcodes are formed by a sequence of 8 or 16 bytes, like so:
+Opcodes are formed by a sequence of 8 bytes, like so:
 
 `02 b7 55 00`
 
-`16 00 10 22 02 ab 2a a3`
 
-The first is the opcode, the other three or seven are operands.
+The first is the opcode, the other three are operands.
 
 ## types of opcodes
 
