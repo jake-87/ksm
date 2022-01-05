@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jan  4 19:41:39 2022
+# Make data base, printed on Wed Jan  5 13:09:30 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-d6d7761e-50ff-4e42-9d3f-9151a0fdde82.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-bd0e5e5d-2649-4db6-8170-8e9328a56462.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -91,7 +91,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 19852
+VSCODE_PID = 2850
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -99,7 +99,7 @@ VSCODE_PID = 19852
 # environment
 CHROME_DESKTOP = Electron.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-ZNtghI6g2I,guid=1dfac23609b281f99acac0f061d39a00
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-jjQZc661S4,guid=873903164a0e223ae4668d9f61d4faec
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -249,6 +249,6 @@ GNUmakefile:
 # strcache performance: lookups = 23 / hit rate = 13%
 # hash-table stats:
 # Load=20/8192=0%, Rehash=0, Collisions=0/23=0%
-# Finished Make data base on Tue Jan  4 19:41:39 2022
+# Finished Make data base on Wed Jan  5 13:09:30 2022
 
  
