@@ -112,9 +112,9 @@ module ops
         type(cpu_t), intent(inout) :: cpu
         integer(kind = 8), intent(in) :: a1, a2, a3
         if (a2 == 1) then
-            write (*,'(Z3)') cpu%mem(a1)
+            write (*,'(A, Z3)') cpu%mem(a1)
         else
-            write (*,'(Z3)') a1
+            write (*,'(A, Z3)') a1
         end if
     end subroutine op0b
 
@@ -129,9 +129,9 @@ module ops
         type(cpu_t), intent(inout) :: cpu
         integer(kind = 8), intent(in) :: a1, a2, a3
         if (a2 == 1) then
-            call EXIT(cpu%mem(a1))
+            call EXIT(int(cpu%mem(a1), 4))
         else
-            call EXIT(a1)
+            call EXIT(int(a1, 4))
         end if
     end subroutine op0d
 
