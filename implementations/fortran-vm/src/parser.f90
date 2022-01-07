@@ -61,30 +61,18 @@ module parser
         end subroutine call_ops
         subroutine parse(filepath, memory)
             character(*), intent(in) :: filepath
+            character, dimension(:), allocatable :: file
             integer(kind = 8), intent(in) :: memory
             integer(kind = 8) :: iop, ia1, ia2, ia3, iconcat
-            integer :: iostat, count
+            integer :: iostat, count, sz
             type(cpu_t) :: cpu
             character(len = 2) :: op, a1, a2, a3
             character(len = 6) :: concat
             allocate(cpu%mem(memory))
-            open(1, file = filepath, status='old')  
-            cpu%
+            open(1, file = filepath, status='old')
+            inquire(file=filepath, size=sz)
+            allocate(file(sz + 10))
             do while(1 == 1)
-                read(1, "(4A)", advance="no", iostat=iostat) op, a1, a2, a3
-                concat = a1 // a2 // a3
-                print *, op, " ", a1, " ",a2," ", a3, " ", concat
-                count = count + iostat
-                read(op, "(Z2)", iostat=iostsat) iop
-                count = count + iostat
-                read(a1, "(Z2)", iostat=iostsat) ia1
-                count = count + iostat
-                read(a2, "(Z2)", iostat=iostsat) ia2
-                count = count + iostat
-                read(a3, "(Z2)", iostat=iostsat) ia3
-                count = count + iostat
-                read(concat, "(Z6)", iostat=iostsat) iconcat
-                count = count + iostat
                 if (count /= 0) then
                     print *, "Unexpected EOF"
                     call EXIT(1)
