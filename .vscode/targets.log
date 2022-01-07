@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jan  5 13:09:30 2022
+# Make data base, printed on Fri Jan  7 17:15:12 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-bd0e5e5d-2649-4db6-8170-8e9328a56462.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-6888a948-9f52-4d57-99aa-7315eb0198fc.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -79,6 +79,8 @@ MFLAGS = -pqrR
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
+VK_ICD_FILENAMES = /usr/share/vulkan/icd.d/nvidia_icd.json
+# environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"Code - OSS","submitURL":"","uploadToServer":false}
 # makefile
 MAKEFILE_LIST := 
@@ -91,7 +93,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 2850
+VSCODE_PID = 3186
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -99,7 +101,7 @@ VSCODE_PID = 2850
 # environment
 CHROME_DESKTOP = Electron.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-jjQZc661S4,guid=873903164a0e223ae4668d9f61d4faec
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-438PxhmsNS,guid=649fcaa5107f140d84e907f961d7d094
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -151,6 +153,7 @@ DISPLAY = :0
 # environment
 USER = jake
 # default
+ 
 MAKE_VERSION := 4.3
 # environment
 PAGER = less
@@ -183,7 +186,7 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=4/112=4%
+# Load=86/1024=8%, Rehash=0, Collisions=4/113=4%
 
 # Pattern-specific Variable Values
 
@@ -249,6 +252,6 @@ GNUmakefile:
 # strcache performance: lookups = 23 / hit rate = 13%
 # hash-table stats:
 # Load=20/8192=0%, Rehash=0, Collisions=0/23=0%
-# Finished Make data base on Wed Jan  5 13:09:30 2022
+# Finished Make data base on Fri Jan  7 17:15:12 2022
 
  
