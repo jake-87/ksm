@@ -59,27 +59,61 @@ module parser
                 print *, "unreachable"
             end select
         end subroutine call_ops
+        subroutine iidex(x, y, out)
+            integer(kind = 8), intent(in) :: x, y
+            integer(kind = 8), intent(out) :: out
+            out = x * 8 + y
+        end subroutine iidex
         subroutine parse(filepath, memory)
             character(*), intent(in) :: filepath
-            character, dimension(:), allocatable :: file
+            character(:), allocatable :: file
+            
             integer(kind = 8), intent(in) :: memory
             integer(kind = 8) :: iop, ia1, ia2, ia3, iconcat
-            integer :: iostat, count, sz
+            integer(kind = 8) :: out, i
+            
+            integer :: iostat, sz
+
             type(cpu_t) :: cpu
-            character(len = 2) :: op, a1, a2, a3
+            
+            character, dimension(2) :: op, a1, a2, a3
+            character(len = 2) :: cop, ca1, ca2, ca3
             character(len = 6) :: concat
+            
             allocate(cpu%mem(memory))
+            do i = 0, memory
+                cpu%mem(i) = 0
+            end do
             open(1, file = filepath, status='old')
             inquire(file=filepath, size=sz)
-            allocate(file(sz + 10))
+            allocate(character(len=sz * 8) :: file)
+            read(1, "(A)", advance="no", iostat = iostat) file
+            file = trim(file)
+            cpu%mem(0) = 0
             do while(1 == 1)
-                if (count /= 0) then
-                    print *, "Unexpected EOF"
-                    call EXIT(1)
-                else
-                    call call_ops(iop, cpu, ia1, ia2, ia3, iconcat)
-                    print *, cpu%mem
-                end if
+                call iidex(cpu%mem(0), int(1, 8), out)
+                op = file(out + 0:out + 1)
+                a1 = file(out + 2:out + 3)
+                a2 = file(out + 4:out + 5)
+                a3 = file(out + 6:out + 7)
+                print *, file(1:8)
+                cop = op(1) // op(2)
+                ca1 = a1(1) // a1(2)
+                ca2 = a2(1) // a2(2)
+                ca3 = a3(1) // a3(2)
+                concat = ca1 // ca2 // ca3
+                read(cop, "(Z2)") iop
+                read(ca1, "(Z2)") ia1
+                read(ca2, "(Z2)") ia2
+                read(ca3, "(Z2)") ia3
+                read(concat, "(Z6)") iconcat
+                call call_ops(iop, cpu, ia1, ia2, ia3, iconcat)
+                do i = 0, memory
+                    write(*, "(I0)", advance="no") cpu%mem(i)
+                    write(*, "(A)", advance="no") "   :   "
+                end do
+                print *, ""
+                call EXIT(1)
             end do
         end subroutine parse
 end module parser
