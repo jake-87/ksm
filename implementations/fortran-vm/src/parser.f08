@@ -59,11 +59,6 @@ module parser
                 print *, "unreachable"
             end select
         end subroutine call_ops
-        subroutine iidex(x, y, out)
-            integer(kind = 8), intent(in) :: x, y
-            integer(kind = 8), intent(out) :: out
-            out = x * 8 + y
-        end subroutine iidex
         subroutine parse(filepath, memory)
             character(*), intent(in) :: filepath
             character(:), allocatable :: file
@@ -76,9 +71,7 @@ module parser
 
             type(cpu_t) :: cpu
             
-            character, dimension(2) :: op, a1, a2, a3
-            character(len = 2) :: cop, ca1, ca2, ca3
-            character(len = 6) :: concat
+            character(:), allocatable :: op, a1, a2, a3, concat
             
             allocate(cpu%mem(memory))
             do i = 0, memory
@@ -87,33 +80,31 @@ module parser
             open(1, file = filepath, status='old')
             inquire(file=filepath, size=sz)
             allocate(character(len=sz * 8) :: file)
+            allocate(character(len=2) :: op, a1, a2, a3)
+            allocate(character(len=6) :: concat)
             read(1, "(A)", advance="no", iostat = iostat) file
             file = trim(file)
             cpu%mem(0) = 0
             do while(1 == 1)
-                call iidex(cpu%mem(0), int(1, 8), out)
-                op = file(out + 0:out + 1)
-                a1 = file(out + 2:out + 3)
-                a2 = file(out + 4:out + 5)
-                a3 = file(out + 6:out + 7)
-                print *, file(1:8)
-                cop = op(1) // op(2)
-                ca1 = a1(1) // a1(2)
-                ca2 = a2(1) // a2(2)
-                ca3 = a3(1) // a3(2)
-                concat = ca1 // ca2 // ca3
-                read(cop, "(Z2)") iop
-                read(ca1, "(Z2)") ia1
-                read(ca2, "(Z2)") ia2
-                read(ca3, "(Z2)") ia3
+                out = cpu%mem(0) * 8
+                op = file(1 + out:2 + out)
+                a1 = file(3 + out:4 + out)
+                a2 = file(5 + out:6 + out)
+                a3 = file(7 + out:8 + out)
+               ! write(*, '(A5)', advance="no") op, a1, a2, a3, ": "
+                concat = a1 // a2 // a3
+                read(op, "(Z2)") iop
+                read(a1, "(Z2)") ia1
+                read(a2, "(Z2)") ia2
+                read(a3, "(Z2)") ia3
                 read(concat, "(Z6)") iconcat
                 call call_ops(iop, cpu, ia1, ia2, ia3, iconcat)
-                do i = 0, memory
-                    write(*, "(I0)", advance="no") cpu%mem(i)
-                    write(*, "(A)", advance="no") "   :   "
-                end do
-                print *, ""
-                call EXIT(1)
+               ! do i = 0, memory
+               !     write(*, "(I3)", advance="no") cpu%mem(i)
+               !    write(*, "(A)", advance="no") "   :   "
+               ! end do
+               ! print *, "   :   ", cpu%cmp
+                cpu%mem(0) = cpu%mem(0) + 1
             end do
         end subroutine parse
 end module parser

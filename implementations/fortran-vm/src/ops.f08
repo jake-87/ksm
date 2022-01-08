@@ -95,7 +95,7 @@ module ops
     subroutine op09(cpu, concat)
         type(cpu_t), intent(inout) :: cpu
         integer(kind = 8), intent(in) :: concat
-        if (cpu%cmp .ne. 0) then
+        if (cpu%cmp == 0) then
             cpu%mem(0) = concat / 4
         end if
     end subroutine op09
@@ -103,7 +103,7 @@ module ops
     subroutine op0a(cpu, concat)
         type(cpu_t), intent(inout) :: cpu
         integer(kind = 8), intent(in) :: concat
-        if (cpu%cmp == 0) then
+        if (cpu%cmp /= 0) then
             cpu%mem(0) = concat / 4
         end if
     end subroutine op0a
@@ -112,9 +112,11 @@ module ops
         type(cpu_t), intent(inout) :: cpu
         integer(kind = 8), intent(in) :: a1, a2, a3
         if (a2 == 1) then
-            write (*,'(A, Z3)') cpu%mem(a1)
+            write (*, "(A)", advance="no") "0x"
+            write (*,'(Z3)') cpu%mem(a1)
         else
-            write (*,'(A, Z3)') a1
+            write (*, "(A)", advance="no") "0x"
+            write (*,'(Z3)') a1
         end if
     end subroutine op0b
 
