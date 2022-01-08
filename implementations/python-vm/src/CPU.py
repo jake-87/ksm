@@ -87,9 +87,9 @@ class cpu:
             self.mem[0] = int(arg1 + arg2 + arg3, 16) // 4
     def __op0b(self, arg1, arg2, arg3):
         if arg2 == 1:
-            k = "\n\n\n" + hex(self.mem[arg1]) + "\n\n\n"
+            k = "\n" + hex(self.mem[arg1]) + "\n"
         else:
-            k = "\n\n\n" + hex(arg1) + "\n\n\n"
+            k = "\n" + hex(arg1) + "\n"
         return ["print", k]
     def __op0c(self, arg1, arg2, arg3):
         self.mem[arg1] = int(input(">"), 16)

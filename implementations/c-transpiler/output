@@ -1,2 +1,4 @@
 #! /bin/sh
-./transpile.sh $@
+bash ./transpile.sh $1 ksm-output $2
+rm ksm-output.c
+./ksm-output
