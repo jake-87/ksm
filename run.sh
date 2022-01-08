@@ -1,12 +1,22 @@
 #! /bin/bash
 usage() {
     printf "USAGE: ./run.sh <module> <options>\n\n"
-    printf "modules: python-vm c-vm fortran-vm nodejs-vm c-transpiler python-assembler\n\n"
+    printf "modules: python-vm c-vm fortran-vm nodejs-vm c-transpiler python-assembler help\n\n"
     printf "*-vm: ./run.sh <module> <path to ksm file> <memory amount> [debug: bool]\n"
     printf "*-transpiler: ./run.sh <module> <path to ksm file> <memory amount>\n"
     printf "*-assembler: ./run.sh <module> <path to ksm-asm file> [debug: bool]\n"
+    printf "help: ./run.sh <module>\n"
 }
 if [ $# -lt 2 ]; then
+    if [ "$1" == "help" ]; then
+        printf "\n Requirements for all impls: POSIX sh, Bash\n"
+        printf "c-*: GCC\n"
+        printf "fortran-*: Gfortran\n"
+        printf "python-*: python3\n"
+        printf "nodejs-*: node >= 12\n"
+        printf "htmljs-*: modern browser\n"
+        exit
+    fi
     usage
     exit
 fi
