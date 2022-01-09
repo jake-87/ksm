@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<meta charset="utf8">
+<html>
+    <head>
+         
+        <link rel="stylesheet" href="style.css">
+        <script
+			  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+			  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+			  crossorigin="anonymous">
+        </script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <p>
+            Place your KSM assembly code below, use the dropdown to select the VM you want to use, and hit the button to run and see the output!
+            <br>
+            If the program gives no output, there may be a bug in your code. Unfortunatly, the debugger is still TODO, so you'll have to find it.
+        </p>
+        <div style="position: relative;" id="container">
+            <button id="submit" onclick="runcode();">Assemble and run code</button>
+            <select id="vm-select">
+                <option value="python-vm">Python VM</option>
+                <option value="c-vm">C VM</option>
+                <option value="fortran-vm">Fortran VM</option>
+                <option value="nodejs-vm">Nodejs VM</option>
+                <option value="c-transpiler">C Transpiler</option>
+            </select>
+            Memory amount:
+            <input type="number" id="memory-amount"></input>
+        </div>
+        <textarea id="textbox" name="input" placeholder="Code here! This box will get larger as you type." spellcheck="false"></textarea>
+        <div id="output">Your output will appear here.</div>
+        <script src="./app.js"></script>
+        <p>
+            <br><br><br>
+            Requirements for all impls: POSIX sh, Bash <br>
+            c-*: GCC<br>
+            fortran-*: Gfortran<br>
+            python-*: python3<br>
+            nodejs-*: node >= 12<br>
+            htmljs-*: modern browser hint: if you're reading this on the website, it's already working :) <br>
+        </p>
+    </body>
+</html>

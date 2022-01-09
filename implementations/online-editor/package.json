@@ -1,0 +1,18 @@
+{
+  "name": "online-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "encoding": "^0.1.13",
+    "express": "^4.17.2",
+    "fs-extra": "^10.0.0",
+    "socket.io": "^4.4.1"
+  }
+}

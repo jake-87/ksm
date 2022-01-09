@@ -5,7 +5,7 @@ usage() {
     printf "*-vm: ./run.sh <module> <path to ksm file> <memory amount> [debug: bool]\n"
     printf "*-transpiler: ./run.sh <module> <path to ksm file> <memory amount>\n"
     printf "*-assembler: ./run.sh <module> <path to ksm-asm file> [debug: bool]\n"
-    printf "help: ./run.sh <module>\n"
+    printf "help: ./run.sh help\n"
 }
 if [ $# -lt 2 ]; then
     if [ "$1" == "help" ]; then
