@@ -32,7 +32,7 @@ If the argument should be left blank, it is signified with zeros.
 
 ## Conventions:
 
-xx, yy, zz -> Arguments
+xx, yy, mm -> Arguments
 
 mm -> Mode
 
@@ -68,21 +68,21 @@ Please do *not* use the `mov des src mode` as actual text opcodes, for that, see
 
 0d xx mm 00 -> hlt arg1 mode 00, halts with return code arg1 or content of arg1, depending on mode
 
-0e xx yy zz -> store arg1 arg2 arg3, move content of memory address 01 into memory address arg1 + arg2 + arg3, see jmp for rules
+0e xx yy mm -> store arg1 arg2 arg3, move content of memory address 01 into memory address arg1 + arg2 + arg3, see jmp for rules
 
-0f xx yy zz -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into memory address 01, see jmp for rules
+0f xx yy mm -> load arg1 arg2 arg3, move content of memory address arg1 + arg2 + arg3 into memory address 01, see jmp for rules
 
-10 xx yy zz -> xor arg1 arg2 mode, xor arg1 with arg2, result in memory address 01
+10 xx yy mm -> xor arg1 arg2 mode, xor arg1 with arg2, result in memory address 01
 
-11 xx yy zz -> and arg1 arg2 mode, and arg1 with arg2, result in memory address 01
+11 xx yy mm -> and arg1 arg2 mode, and arg1 with arg2, result in memory address 01
 
-12 xx yy zz -> or arg1 arg2 mode, or arg1 with arg2, result in memory address 01
+12 xx yy mm -> or arg1 arg2 mode, or arg1 with arg2, result in memory address 01
 
 13 xx mm 00 -> not arg1 mode 00, not arg1, result in memory address 01
 
-14 xx yy zz -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
+14 xx yy mm -> bsl arg1 arg2 mode, bitshift arg1 arg2 bits left
 
-15 xx yy zz -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
+15 xx yy mm -> bsr arg1 arg2 mode, bitshift arg1 arg2 bits right
 
 16 yy yy yy -> movl arg1 arg2 arg3, move concat value of yy yy yy into memory address 01. See jmp for concat rules
 

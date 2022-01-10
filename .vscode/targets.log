@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
- 
 # GNU Make 4.3
 # Built for x86_64-unknown-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jan 10 16:18:29 2022
+# Make data base, printed on Mon Jan 10 16:48:53 2022
 
 # Variables
 
@@ -21,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-660a7ed6-b427-45da-9364-58e78721bc52.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-8f2b849f-b5cc-44a0-949d-c193f500af2a.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -93,7 +91,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 15915
+VSCODE_PID = 5107
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -251,6 +249,8 @@ GNUmakefile:
 # strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
 # Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
-# Finished Make data base on Mon Jan 10 16:18:29 2022
+# Finished Make data base on Mon Jan 10 16:48:53 2022
 
+ 
+make: *** No rule to make target 'all'.  Stop.
  
