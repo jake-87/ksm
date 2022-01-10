@@ -1,0 +1,3 @@
+movl 500
+write m1
+hlt 0

@@ -97,7 +97,9 @@ class codegenerator():
             if op in dict_ksm.k[3]:
                 mode = getmode_single(str(arg1mem))
             else:
-                mode = getmode(arg1mem, arg2mem if arg2mem else 0)
+                if not 'arg2mem' in locals():
+                    arg2mem = 0
+                mode = getmode(arg1mem, arg2mem)
             # Assemble the opcode
             final_op = assemble_op(op, str(arg1), str(arg2) if arg2 else None, str(mode))
             semi_final_opcodes.append(final_op)
