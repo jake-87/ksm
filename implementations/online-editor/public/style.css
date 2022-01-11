@@ -1,14 +1,14 @@
 body {
-    background-color: #000000;
-    color: #00FF00;
+    background-color: #072227;
+    color: #35858B;
     font-family: monospace;
     font-size: 16px;
 }
 #textbox {
-    background-color: #000000;
-    color: #00FF00;
+    background-color: #072227;
+    color: #35858B;
     padding: 2ch;
-    border: 2px solid #000000;
+    border: 2px solid #4FBDBA;
     font-family: monospace;
     font-size: 16px;
     width: 80ch;
@@ -16,35 +16,25 @@ body {
     height: auto;
 }
 #output {
-    background-color: #000000;
-    color: #00FF00;
     padding: 2ch;
-    border: 2px solid #000000;
+    border: 2px solid #4FBDBA;
     font-family: monospace;
     font-size: 16px;
     width: 80ch;
 }
 #submit {
-    background-color: #000000;
-    color: #00FF00;
     display: inline;
-    border: 2px solid #000000;
+    border: 2px solid #4FBDBA;
     padding: 2ch;
     font-family: monospace;
     font-size: 16px;
 }
 #vm-select {
-    background-color: #000000;
-    color: #00FF00;
     display: inline;
-    border: 2px solid #000000;
+    border: 2px solid #4FBDBA;
     padding: 2ch;
     font-family: monospace;
     font-size: 16px;
-}
-#memory-amount {
-    background-color: #000000;
-    color: #00FF00;
 }
 #container {
     padding: 2ch;

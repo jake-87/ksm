@@ -1,2 +1,2 @@
 #! /bin/sh
-python3 src/main.py $@ 2> /dev/null
+python3 src/main.py $@

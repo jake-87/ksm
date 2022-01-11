@@ -91,7 +91,6 @@ module parser
                 a1 = file(3 + out:4 + out)
                 a2 = file(5 + out:6 + out)
                 a3 = file(7 + out:8 + out)
-               ! write(*, '(A5)', advance="no") op, a1, a2, a3, ": "
                 concat = a1 // a2 // a3
                 read(op, "(Z2)") iop
                 read(a1, "(Z2)") ia1
@@ -99,11 +98,6 @@ module parser
                 read(a3, "(Z2)") ia3
                 read(concat, "(Z6)") iconcat
                 call call_ops(iop, cpu, ia1, ia2, ia3, iconcat)
-               ! do i = 0, memory
-               !     write(*, "(I3)", advance="no") cpu%mem(i)
-               !    write(*, "(A)", advance="no") "   :   "
-               ! end do
-               ! print *, "   :   ", cpu%cmp
                 cpu%mem(0) = cpu%mem(0) + 1
             end do
         end subroutine parse

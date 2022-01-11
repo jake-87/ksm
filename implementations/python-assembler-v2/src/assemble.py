@@ -62,7 +62,7 @@ class op_concat(Opcode):
     def __init__(self, arr):
         super().__init__(arr[0], arr[1], "00",
             lambda x, y: 0,
-            lambda o, a1, a2, m: o + hex(a1).replace("0x", "").zfill(6)
+            lambda o, a1, a2, m: o + hex(a1[0]).replace("0x", "").zfill(6)
         )
 
 class op_one_arg(Opcode):
@@ -114,19 +114,50 @@ operations_dict = {
     "lta": ("18", op_generic),
 }
 
+loops_list = [
+    "jmp",
+    "jmpz",
+    "jmpnz"
+]
+
 def generate_bin(data):
+    global loops_list
+    global operations_dict
+
     splits = ["\n", ";"]
     temp = re.split(str("|".join(splits)), data)
     ast = [0 for i in range(len(temp))]
+    
+    lablere = re.compile("^[^\:]+:")
+    
     for i in range(len(temp)):
         ast[i] = re.split(str("|".join([",", " ", "\t"])), temp[i])
         ast[i] = [elem for elem in ast[i] if elem.strip()]
     ast = [elem for elem in ast if elem]
-    final_output = ""
+    
+    final_ast = [0 for i in range(len(ast))]
     count = 0
+    lable_dict = {}
     for elem in ast:
-        tmp = operations_dict[elem[0]][1](elem)
-        print(elem)
-        ast[count] = tmp.generate()
-        count += 1
-        print(tmp.generate())
+        if lablere.match(elem[0]):
+            lable_dict[elem[0][0:-1]] = str(count - 4)
+            continue
+        elif elem[0] in loops_list:
+            final_ast.append(elem)
+            count += 4
+            continue
+        else:
+            tmp = operations_dict[elem[0]][1](elem)
+            final_ast.append(tmp.generate())
+            count += 4
+    final_ast = [elem for elem in final_ast if elem]
+    final = ""
+    for elem in final_ast:
+        if isinstance(elem, list):
+            arr = [elem[0], lable_dict[elem[1]]]
+            tmp = operations_dict[elem[0]][1](arr)
+            gen = tmp.generate()
+            final += gen
+        else:
+            final += elem
+    print(final)

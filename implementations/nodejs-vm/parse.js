@@ -29,7 +29,7 @@ const func_table = [
     ops.op17,
     ops.op18,
 ];
-const special = ["08", "09", "0a", "0d", "0e", "0f", "15"];
+const special = ["08", "09", "0a", "0d", "0e", "0f", "15", "16"];
 async function parser(fp, memsize, debug) {
     const data = await fs.readFile(fp, "utf8");
     const data_size = data.length;
@@ -51,9 +51,9 @@ async function parser(fp, memsize, debug) {
         let a1_int = parseInt(a1, 16);
         let a2_int = parseInt(a2, 16);
         let a3_int = parseInt(a3, 16);
-        concat = parseInt(concat, 16);
+        let concat_int = parseInt(concat, 16);
         if (special.indexOf(op) > -1) {
-            await func_table[op_int](cpu, concat);
+            await func_table[op_int](cpu, concat_int);
         }
         else {
             await func_table[op_int](cpu, a1_int, a2_int, a3_int);

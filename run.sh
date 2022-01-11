@@ -42,7 +42,7 @@ elif [ "$1" == "c-transpiler" ]; then
     cd implementations/c-transpiler
     ./output $path $3
 elif [ "$1" == "python-assembler" ]; then
-    cd implementations/python-assembler
+    cd implementations/python-assembler-v2
     ./output $path $3
 else
     usage

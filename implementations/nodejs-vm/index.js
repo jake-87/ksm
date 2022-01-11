@@ -9,10 +9,11 @@ async function main() {
     }
     const fp = argv[2];
     let memsize = argv[3];
-    const debug = argv[4];
+    let debug = argv[4];
     if (!memsize) {
         memsize = MIN_MEMSIZE;
     }
+    debug = parseInt(debug)
     await parser(fp, memsize, debug);
     return 0;
 }

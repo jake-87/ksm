@@ -3,8 +3,8 @@ function runcode() {
     let code = document.getElementById("textbox").value;
     let sel = document.getElementById("vm-select").value;
     let mem = document.getElementById("memory-amount").valueAsNumber;
-    console.log("function was called", code);
-    socket.emit("run-code", code, sel, mem);
+    let debug = document.querySelector('.debug-enable').checked;
+    socket.emit("run-code", code, sel, mem, debug);
 }
 let textarea = document.getElementById("textbox");
 let heightLimit = 1000; /* Maximum height: 200px */

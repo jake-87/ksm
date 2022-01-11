@@ -11,15 +11,16 @@ var encoding = require("encoding");
 app.use(express.static("public"));
 
 io.on('connection', (socket) => {
-    socket.on('run-code', (code, sel, mem) => {
+    socket.on('run-code', (code, sel, mem, debug) => {
         fs.writeFileSync("tempfile.tempfile", code);
-        output = spawnSync("./output", ["../online-editor/tempfile.tempfile"], { cwd: "../python-assembler", timeout: 10000 });
+        output = spawnSync("./output", ["../online-editor/tempfile.tempfile"], { cwd: "../python-assembler-v2", timeout: 10000 });
         let assembly = String(output.stdout);
         let stderr = String(output.stderr);
         fs.writeFileSync("tempfile.tempfile", assembly);
         mem = mem ? mem : 1024
-
-        output = spawnSync("./run.sh", [sel, "implementations/online-editor/tempfile.tempfile", mem], { cwd: '../../', timeout: 10000 });
+        debug = debug ? 1 : 0
+        console.log(debug)
+        output = spawnSync("./run.sh", [sel, "implementations/online-editor/tempfile.tempfile", mem, debug], { cwd: '../../', timeout: 10000 });
         stderr += String(output.stderr);
         let final_string = "Assembly:\n\n" + assembly + "\n\n Program output: \n" + String(output.stdout) + "\n\n stderr (none is good):\n" + stderr;
         let tmp = final_string.replace("Warning: Fortran VM does not support debug", "");

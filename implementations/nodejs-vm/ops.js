@@ -137,6 +137,7 @@ async function op15(cpu, a1, a2, a3) {
     await domath(lam, cpu, a1, a2, a3);
 }
 async function op16(cpu, concat) {
+    console.log(concat);
     await cpu.sv(1, concat);
 }
 async function op17(cpu, a1, a2, a3) {

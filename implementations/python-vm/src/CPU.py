@@ -2,7 +2,7 @@ class cpu:
     def __init__(self, memsize):
         self.mem = [0 for i in range(memsize)]
         self.cmp = 0
-        self.special = ["00", "08", "09", "0a", "0d", "0e", "0f", "15"]
+        self.special = ["00", "08", "09", "0a", "0d", "0e", "0f", "15", "16"]
         self.op = {
             "00": self.__op00,
             "01": self.__op01,
@@ -32,7 +32,7 @@ class cpu:
         }
     def __shx(self, x):
         k = hex(int(x, 16))
-        return k.replace("x", "")
+        return k.replace("0x", "")
     def __op00(self, arg1, arg2, arg3):
         if int(arg3, 16) == 1:
             self.mem[int(arg1, 16)] = self.mem[int(arg2, 16)]

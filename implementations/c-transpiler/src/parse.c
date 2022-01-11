@@ -29,13 +29,12 @@ void (*op_table[])() = {
     op17,
     op18,
 };
-char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15"};
+char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16"};
 char * jmps[] = {"07", "08", "09", "0a"};
 int8_t jmp_size = 4;
-int32_t special_ins_size = 7;
+int32_t special_ins_size = 8;
 // test if string in array
-// TODO: Can this be inlined?
-int8_t in_strarr(char ** strarr, int32_t size, char * tst) {
+inline int8_t in_strarr(char ** strarr, int32_t size, char * tst) {
     for (int i = 0; i < size; i++) {
         if (strcmp(strarr[i], tst) == 0) {
             return 1;
