@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+ 
 # GNU Make 4.3
 # Built for x86_64-unknown-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jan 11 17:41:43 2022
+# Make data base, printed on Wed Jan 12 20:43:46 2022
 
 # Variables
 
@@ -19,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-928f3e69-f4f4-44fc-9192-8cf1fc80e9d8.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-fc0dd9a1-47f2-4a5f-8261-19c30cbbb04f.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -91,7 +93,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 14294
+VSCODE_PID = 21818
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -99,7 +101,7 @@ VSCODE_PID = 14294
 # environment
 CHROME_DESKTOP = Electron.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-IQrBT4SDy1,guid=168456ed24b410465d6e51fc61dcf9c9
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-cLjFKnmJ7h,guid=11e421875a8bd01faf92735861de255b
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -249,8 +251,6 @@ GNUmakefile:
 # strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
 # Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
-# Finished Make data base on Tue Jan 11 17:41:43 2022
+# Finished Make data base on Wed Jan 12 20:43:46 2022
 
- 
-make: *** No rule to make target 'all'.  Stop.
  
