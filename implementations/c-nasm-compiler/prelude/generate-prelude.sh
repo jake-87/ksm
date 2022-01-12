@@ -1,0 +1,8 @@
+printf "bits 64\n"
+printf "section .data\n"
+printf "mem times $1 dq 0\n"
+printf "section .text\n"
+printf "global main\n"
+printf "extern printer\n"
+printf "extern scanner\n"
+printf "main:\n"

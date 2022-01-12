@@ -4,7 +4,8 @@
 IVO(00) (CPU, ARGS) {
     a3_1 {
         cpu->mem[a1] = cpu->mem[a2];
-        printf("cpu.mem[%ld] = cpu.mem[%ld];\n", a1, a2);
+        printf("mov qword rax, [mem + %ld * 8]\n", a2);
+        printf("mov qword [mem + %ld * 8], rax\n", a1);
     }
     a3_2 {
         cpu->mem[a1] = a2;
@@ -106,28 +107,17 @@ IVO(0a) (CPU, int64_t concat) {
 IVO(0b) (CPU, ARGS) {
     if (a2 == 01) {
         //printf("%c0x%lx\n", cpu->mem[a1] < 0 ? '-' : ' ', (uint64_t) labs(cpu->mem[a1]));
-        printf("printf(\"");
-        printf("%%");
-        printf("c0x");
-        printf("%%");
-        printf("lx\\n\"");
-        printf(", cpu.mem[%ld] < 0 ? '-' : ' ', (uint64_t) labs(cpu.mem[%ld]));\n", a1, a1);
+        
     }
     else {
         //printf("%c0x%lx\n",a1 < 0 ? '-' : ' ', (uint64_t) labs(a1));
-        printf("printf(\"");
-        printf("%%");
-        printf("c0x");
-        printf("%%");
-        printf("lx\\n\"");
-        printf(", %ld < 0 ? '-' : ' ', (uint64_t) labs(%ld));\n", a1, a1);
+        
     }
 }
 IVO(0c) (CPU, ARGS) {
     //uint64_t temp;
     //scanf("%lx", &temp);
     //cpu->mem[a1] = (int64_t) temp;
-    printf("uint64_t temp; scanf(\"%%lx\", &temp); cpu.mem[%ld] = (int64_t) temp;\n", a1);
 }
 IVO(0d) (CPU, ARGS) {
     if (a2 == 01) {
