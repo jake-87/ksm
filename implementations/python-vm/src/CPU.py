@@ -158,7 +158,7 @@ class cpu:
     def __op19(self, arg1, arg2, arg3):
         if self.cmp > 0:
             self.mem[0] = int(arg1 + arg2 + arg3, 16) // 4
-    def __op09(self, arg1, arg2, arg3):
+    def __op1a(self, arg1, arg2, arg3):
         if self.cmp < 0:
             self.mem[0] = int(arg1 + arg2 + arg3, 16) // 4
     def call(self, op, arg1, arg2, arg3):
