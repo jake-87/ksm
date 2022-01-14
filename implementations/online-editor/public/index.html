@@ -24,7 +24,8 @@
                 <option value="c-vm">C VM</option>
                 <option value="fortran-vm">Fortran VM</option>
                 <option value="nodejs-vm">Nodejs VM</option>
-                <option value="c-transpiler">C Transpiler</option>
+                <option value="c-transpiler">KSM -> C Transpiler ( via C )</option>
+                <option value="c-nasm-transpiler">KSM -> Nasm Transpiler ( via C )</option>
             </select>
             Memory amount:
             <input type="number" id="memory-amount"></input>
@@ -38,6 +39,7 @@
             <br><br><br>
             Requirements for all impls: POSIX sh, Bash <br>
             c-*: GCC<br>
+            c-nasm-*: nasm, GCC<br>
             fortran-*: Gfortran<br>
             python-*: python3<br>
             nodejs-*: node >= 12<br>

@@ -17,7 +17,7 @@ fi
 CARGS="-O3 -Wall -Wextra -pedantic -Wno-unused-parameter"
 CARGS="$CARGS -Wno-unused-parameter -Wno-stringop-truncation -Wno-string-concatenation "
 CARGS="$CARGS -Wno-unknown-warning-option -Wno-newline-eof"
-CC=cc
+CC=clang
 $CC src/*.c -o tmp-output $CARGS
 cat transpile/preamble.c > $k.c
 printf "int main () {\n" >> $k.c

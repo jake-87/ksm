@@ -28,8 +28,10 @@ const func_table = [
     ops.op16,
     ops.op17,
     ops.op18,
+    ops.op19,
+    ops.op1a,
 ];
-const special = ["08", "09", "0a", "0d", "0e", "0f", "15", "16"];
+const special = ["08", "09", "0a", "0d", "0e", "0f", "15", "16", "19", "1a"];
 async function parser(fp, memsize, debug) {
     const data = await fs.readFile(fp, "utf8");
     const data_size = data.length;

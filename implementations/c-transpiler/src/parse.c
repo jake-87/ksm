@@ -28,11 +28,13 @@ void (*op_table[])() = {
     op16,
     op17,
     op18,
+    op19,
+    op1a,
 };
-char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16"};
+char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16", "19", "1a"};
 char * jmps[] = {"07", "08", "09", "0a"};
 int8_t jmp_size = 4;
-int32_t special_ins_size = 8;
+int32_t special_ins_size = 10;
 // test if string in array
 inline int8_t in_strarr(char ** strarr, int32_t size, char * tst) {
     for (int i = 0; i < size; i++) {

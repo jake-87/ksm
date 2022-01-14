@@ -2,7 +2,7 @@ class cpu:
     def __init__(self, memsize):
         self.mem = [0 for i in range(memsize)]
         self.cmp = 0
-        self.special = ["00", "08", "09", "0a", "0d", "0e", "0f", "15", "16"]
+        self.special = ["00", "08", "09", "0a", "0d", "0e", "0f", "15", "16", "19", "1a"]
         self.op = {
             "00": self.__op00,
             "01": self.__op01,
@@ -28,7 +28,9 @@ class cpu:
             "15": self.__op15,
             "16": self.__op16,
             "17": self.__op17,
-            "18": self.__op18
+            "18": self.__op18,
+            "19": self.__op19,
+            "1a": self.__op1a
         }
     def __shx(self, x):
         k = hex(int(x, 16))
@@ -153,6 +155,12 @@ class cpu:
             self.mem[self.mem[arg1]] = self.mem[arg2]
         else:
             self.mem[self.mem[arg1]] = arg2
+    def __op19(self, arg1, arg2, arg3):
+        if self.cmp > 0:
+            self.mem[0] = int(arg1 + arg2 + arg3, 16) // 4
+    def __op09(self, arg1, arg2, arg3):
+        if self.cmp < 0:
+            self.mem[0] = int(arg1 + arg2 + arg3, 16) // 4
     def call(self, op, arg1, arg2, arg3):
         if op not in self.special:
             return self.op[op](int(arg1), int(arg2), int(arg3))

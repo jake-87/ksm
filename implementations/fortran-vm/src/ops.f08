@@ -113,10 +113,10 @@ module ops
         integer(kind = 8), intent(in) :: a1, a2, a3
         if (a2 == 1) then
             write (*, "(A)", advance="no") "0x"
-            write (*,'(Z3)') cpu%mem(a1)
+            write (*,'(Z20)') cpu%mem(a1)
         else
             write (*, "(A)", advance="no") "0x"
-            write (*,'(Z3)') a1
+            write (*,'(Z20)') a1
         end if
     end subroutine op0b
 
@@ -240,4 +240,20 @@ module ops
             cpu%mem(cpu%mem(a1)) = a2
         end if
     end subroutine op18
+
+    subroutine op19(cpu, concat)
+        type(cpu_t), intent(inout) :: cpu
+        integer(kind = 8), intent(in) :: concat
+        if (cpu%cmp .gt. 0) then
+            cpu%mem(0) = concat / 4
+        end if
+    end subroutine op19
+
+    subroutine op1a(cpu, concat)
+        type(cpu_t), intent(inout) :: cpu
+        integer(kind = 8), intent(in) :: concat
+        if (cpu%cmp .lt. 0) then
+            cpu%mem(0) = concat / 4
+        end if
+    end subroutine op1a
 end module ops 

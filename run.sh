@@ -41,6 +41,10 @@ elif [ "$1" == "c-transpiler" ]; then
     printf "output avalible as implimentations/c-transpiler/ksm-output\n\n"
     cd implementations/c-transpiler
     ./output $path $3
+elif [ "$1" == "c-nasm-transpiler" ]; then
+    printf "output avalible as implimentations/c-nasm-transpiler/ksm-output\n\n"
+    cd implementations/c-nasm-transpiler
+    ./output $path $3 | tee mylog.log
 elif [ "$1" == "python-assembler" ]; then
     cd implementations/python-assembler-v2
     ./output $path $3

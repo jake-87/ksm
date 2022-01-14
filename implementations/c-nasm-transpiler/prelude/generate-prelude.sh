@@ -9,6 +9,7 @@ section .text
     extern scanner
     extern my_exit
     extern malloc
+    extern flusher
 main:
     mov rax, $1
     mov rbx, 8

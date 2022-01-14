@@ -10,3 +10,7 @@ int64_t scanner() {
     int64_t ret = (int64_t) temp;
     return ret;
 }
+void flusher() {
+    fflush(stdout);
+    fflush(stderr);
+}

@@ -79,3 +79,7 @@ lfa ag1 ag2 : Move content of memory location spesified by value of ag2 into ag2
 lta ag1 ag2 : Move content of memory location ag2 into memory location spesified by ag1, eg:
 
 `lta m0x01 m0x03, if 03 contains the value 05, moves the value of memory location 05 into 01.`
+
+jmpgt lable : Jump to lable if previous cmp, a1 was greater then a2.
+
+jmplt lable : Jump to lable if previous cmp, a1 was less then then a2.

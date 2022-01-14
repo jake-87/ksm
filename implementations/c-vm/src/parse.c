@@ -28,9 +28,11 @@ void (*op_table[])() = {
     op16,
     op17,
     op18,
+    op19,
+    op1a,
 };
-char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16"};
-int32_t special_ins_size = 8;
+char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16", "19", "1a"};
+int32_t special_ins_size = 10;
 // test if string in array
 // TODO: Can this be inlined?
 int8_t in_strarr(char ** strarr, int32_t size, char * tst) {

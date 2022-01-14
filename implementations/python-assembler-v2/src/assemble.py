@@ -112,12 +112,16 @@ operations_dict = {
     "movl": ("16", op_concat),
     "lfa": ("17", op_no_mode),
     "lta": ("18", op_generic),
+    "jmpgt": ("19", op_concat),
+    "jmplt": ("1a", op_concat),
 }
 
 loops_list = [
     "jmp",
     "jmpz",
-    "jmpnz"
+    "jmpnz",
+    "jmpgt",
+    "jmplt",
 ]
 
 def generate_bin(data):

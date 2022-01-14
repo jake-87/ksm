@@ -55,6 +55,10 @@ module parser
                 call op17(cpu, a1, a2, a3)
             case(24)
                 call op18(cpu, a1, a2, a3)
+            case(25)
+                call op19(cpu, concat)
+            case(26)
+                call op1a(cpu, concat)
             case default
                 print *, "unreachable"
             end select

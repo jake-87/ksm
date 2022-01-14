@@ -93,3 +93,8 @@ Please do *not* use the `mov des src mode` as actual text opcodes, for that, see
 18 xx yy mm -> lta arg1 arg2 mode, move content of memory location arg2 into memory location spesified by arg1, eg:
 
 `18 01 03 01, if 01 contains the value 05, moves the value of memory location 03 into 05.`
+
+19 zz zz zz -> jmp if previous cmp, ag1 was greater then ag2. 
+
+1a zz zz zz -> jmp if previous cmp, ag1 was less then then ag2. 
+

@@ -187,3 +187,13 @@ IVO(18) (CPU, ARGS) {
         cpu->mem[cpu->mem[a1]] = a2;
     }
 }
+IVO(19) (CPU, int64_t concat) {
+    if (cpu->cmp > 0) {
+        cpu->mem[00] = concat / 4;
+    }
+}
+IVO(1a) (CPU, int64_t concat) {
+    if (cpu->cmp < 0) {
+        cpu->mem[00] = concat / 4;
+    }
+}

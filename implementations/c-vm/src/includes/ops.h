@@ -40,3 +40,5 @@ IVO(15) (CPU, ARGS);
 IVO(16) (CPU, int64_t concat);
 IVO(17) (CPU, ARGS);
 IVO(18) (CPU, ARGS);
+IVO(19) (CPU, int64_t concat);
+IVO(1a) (CPU, int64_t concat);

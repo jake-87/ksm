@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
         stderr += String(output.stderr);
         let final_string = "Assembly:\n\n" + assembly + "\n\n Program output: \n" + String(output.stdout) + "\n\n stderr (none is good):\n" + stderr;
         let tmp = final_string.replace("Warning: Fortran VM does not support debug", "");
-        let t2 = tmp.replace("output avalible as implimentations/c-transpiler/ksm-output", "");
+        let t2 = tmp.replace("output avalible as implimentations/c-transpiler/ksm-output", "").replace("output avalible as implimentations/c-nasm-transpiler/ksm-output", "");
         
         console.log("stdout:", t2);
 

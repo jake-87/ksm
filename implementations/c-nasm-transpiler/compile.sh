@@ -1,5 +1,4 @@
 #! /usr/bin/env bash
-set -x
 file=$1
 output=$2
 mem=$3
@@ -7,11 +6,15 @@ if [ "$2" == "printer" ]; then
     echo "output cannot be printer"
     exit
 fi
+CC=clang
+CARGS="-O3 -Wall -Wextra -pedantic -Wno-unused-parameter"
+CARGS="$CARGS -Wno-unused-parameter -Wno-stringop-truncation -Wno-string-concatenation "
+CARGS="$CARGS -Wno-unknown-warning-option -Wno-newline-eof"
 ./prelude/generate-prelude.sh $mem > $output.nasm
-cc src/*.c -o tmp-output
+$CC src/*.c -o tmp-output -g $CARGS
 ./tmp-output $file >> $output.nasm
 rm tmp-output
 nasm -f elf64 -o $output.o $output.nasm -F dwarf
-cc printer/printer.c -o printer.o -c -g 
-cc $output.o printer.o -o $output -static -g 
-rm printer.o $output.o
+$CC printer/printer.c -o printer.o -c -g $CARGS
+$CC $output.o printer.o -o $output -static -g $CARGS
+rm printer.o $output.o $output.nasm
