@@ -80,6 +80,7 @@ int parse(FILE * fp, int debug, int64_t memsize) {
     main_cpu.cmp = 0;
     main_cpu.mem = calloc(sizeof(int64_t) * memsize, 1);
     main_cpu.mem[0] = 0;
+    main_cpu.rcx = 0;
     char * op = malloc(sizeof(char) * 3);
     char * a1 = malloc(sizeof(char) * 3);
     char * a2 = malloc(sizeof(char) * 3);
@@ -105,14 +106,14 @@ int parse(FILE * fp, int debug, int64_t memsize) {
         sscanf(a2, "%lx", &a2_int);
         sscanf(a3, "%lx", &a3_int);
         sscanf(concat, "%lx", &concat_int);
-        if (!in_strarr(jmps, jmp_size, op))
-            printf("/* %s %s %s %s */ ", op, a1, a2, a3);
         if (in_strarr(special_ins, special_ins_size, op)) {
             op_table[op_int](&main_cpu, concat_int);
         }
         else {
             op_table[op_int](&main_cpu, a1_int, a2_int, a3_int);
         }
+        if (!in_strarr(jmps, jmp_size, op))
+            printf(";%s %s %s %s\n\n", op, a1, a2, a3);
         main_cpu.mem[0]++;
     }
     free(op);

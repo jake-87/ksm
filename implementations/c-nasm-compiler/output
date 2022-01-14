@@ -1,4 +1,3 @@
 #! /bin/sh
-bash ./transpile.sh $1 ksm-output $2
-rm ksm-output.c
+bash ./compile.sh $1 ksm-output $2
 ./ksm-output

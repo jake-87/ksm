@@ -4,80 +4,131 @@
 IVO(00) (CPU, ARGS) {
     a3_1 {
         cpu->mem[a1] = cpu->mem[a2];
-        printf("mov qword rax, [mem + %ld * 8]\n", a2);
-        printf("mov qword [mem + %ld * 8], rax\n", a1);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a2);
+        printf("    mov qword [rcx + %ld * 8], rax\n", a1);
     }
     a3_2 {
         cpu->mem[a1] = a2;
-        printf("cpu.mem[%ld] = %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword [rcx + %ld * 8], %ld\n", a1, a2);
     }
 }
 IVO(01) (CPU, ARGS) {
     cpu->mem[a1]++;
-    printf("cpu.mem[%ld]++;\n", a1);
+    if_rcx_mod
+    printf("    inc qword [rcx + %ld * 8]\n", a1);
 }
 IVO(02) (CPU, ARGS) {
     cpu->mem[a1]--;
-    printf("cpu.mem[%ld]++;\n", a1);
+    if_rcx_mod
+    printf("    dec qword [rcx + %ld * 8]\n", a1);
 }
 IVO(03) (CPU, ARGS) {
     a3_1 {
         cpu->mem[01] = cpu->mem[a1] + cpu->mem[a2];
-        printf("cpu.mem[1] = cpu.mem[%ld] + cpu.mem[%ld];\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, [rcx + %ld * 8]\n", a2);
+        printf("    add rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
     a3_2 {
         cpu->mem[01] = cpu->mem[a1] + a2;
-        printf("cpu.mem[1] = cpu.mem[%ld] + %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    add rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
     else {
         cpu->mem[01] = a1 + a2;
-        printf("cpu.mem[1] = %ld + %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    add rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
 }
 IVO(04) (CPU, ARGS) {
     a3_1 {
         cpu->mem[01] = cpu->mem[a1] - cpu->mem[a2];
-        printf("cpu.mem[1] = cpu.mem[%ld] - cpu.mem[%ld];\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, [rcx + %ld * 8]\n", a2);
+        printf("    sub rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
 
     }
     a3_2 {
         cpu->mem[01] = cpu->mem[a1] - a2;
-        printf("cpu.mem[1] = cpu.mem[%ld] - %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    sub rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
     else {
         cpu->mem[01] = a1 - a2;
-        printf("cpu.mem[1] = %ld - %ld;\n", a1, a2);
-
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    sub rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
 }
 IVO(05) (CPU, ARGS) {
     a3_1 {
         cpu->mem[01] = cpu->mem[a1] * cpu->mem[a2];
-        printf("cpu.mem[1] = cpu.mem[%ld] * cpu.mem[%ld];\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, [rcx + %ld * 8]\n", a2);
+        printf("    imul rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
 
     }
     a3_2 {
         cpu->mem[01] = cpu->mem[a1] * a2;
-        printf("cpu.mem[1] = cpu.mem[%ld] * %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    imul rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
     else {
         cpu->mem[01] = a1 * a2;
-        printf("cpu.mem[1] = %ld * %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    imul rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
 }
 IVO(06) (CPU, ARGS) {
     a3_1 {
         cpu->mem[01] = cpu->mem[a1] / cpu->mem[a2];
-        printf("cpu.mem[1] = cpu.mem[%ld] / cpu.mem[%ld];\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, [rcx + %ld * 8]\n", a2);
+        printf("    idiv rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
 
     }
     a3_2 {
         cpu->mem[01] = cpu->mem[a1] / a2;
-        printf("cpu.mem[1] = cpu.mem[%ld] / %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    idiv rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
     else {
         cpu->mem[01] = a1 / a2;
-        printf("cpu.mem[1] = %ld / %ld;\n", a1, a2);
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    idiv rax, rbx\n", a1, a2);
+        printf("    mov qword [rcx + 1 * 8], rax\n");
     }
 }
 IVO(07) (CPU, ARGS) {
@@ -106,10 +157,17 @@ IVO(0a) (CPU, int64_t concat) {
 }
 IVO(0b) (CPU, ARGS) {
     if (a2 == 01) {
+        if_rcx_mod
+        printf("    mov qword rdi, [rcx + %ld * 8]\n", a1);
+        printf("    call printer\n");
+        cpu->rcx = 1;
         //printf("%c0x%lx\n", cpu->mem[a1] < 0 ? '-' : ' ', (uint64_t) labs(cpu->mem[a1]));
         
     }
     else {
+        printf("    mov qword temp, %ld", a1);
+        printf("    mov qword rdi, [temp]\n");
+        printf("    call printer\n");
         //printf("%c0x%lx\n",a1 < 0 ? '-' : ' ', (uint64_t) labs(a1));
         
     }
@@ -118,24 +176,38 @@ IVO(0c) (CPU, ARGS) {
     //uint64_t temp;
     //scanf("%lx", &temp);
     //cpu->mem[a1] = (int64_t) temp;
+    if_rcx_mod
+    printf("    call scanner\n");
+    printf("    mov qword [rcx + %ld * 8], rax", a1);
+    cpu->rcx = 1;
 }
 IVO(0d) (CPU, ARGS) {
     if (a2 == 01) {
-        printf("exit(cpu.mem[%ld]);\n", a1);
+        if_rcx_mod
+        printf("    mov qword rax, 60\n");
+        printf("    mov qword rdi, [rcx + %ld * 8]\n", a1);
+        printf("    syscall\n");
         exit(cpu->mem[a1]);
     }
     else {
-        printf("exit(%ld);\n", a1);
+        printf("    mov qword rax, 60\n");
+        printf("    mov qword rdi, %ld\n", a1);
+        printf("    syscall\n");
         exit(a1);
     }
 }
 IVO(0e) (CPU, int64_t concat) {
     cpu->mem[concat] = cpu->mem[01];
-    printf("cpu.mem[%ld] = cpu.mem[1];\n", concat);
+    if_rcx_mod
+    printf("    mov qword rax, [rcx + %ld * 8]\n", concat);
+    printf("    mov qword [rcx + 1 * 8], rax\n");
 }
 IVO(0f) (CPU, int64_t concat) {
     cpu->mem[01] = cpu->mem[concat];
-    printf("cpu.mem[1] = cpu.mem[%ld];\n", concat);
+    if_rcx_mod
+    printf("    cpu.mem[1] = cpu.mem[%ld];\n", concat);
+    printf("    mov qword rax, [rcx + 1 * 8]q\n");
+    printf("    mov qword [rcx + %ld * 8], rax\n", concat);
 }
 IVO(10) (CPU, ARGS) {
     a3_1 {
