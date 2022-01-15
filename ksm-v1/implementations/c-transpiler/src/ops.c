@@ -264,24 +264,31 @@ IVO(1b) (CPU, ARGS) {
     if (a2 == 1) {
         cpu->st++;
         cpu->stack[cpu->st] = cpu->mem[a1];
+        printf("cpu->st++; cpu->stack[cpu->st] = cpu->mem[%ld];\n", a1);
     }
     else {
         cpu->st++;
         cpu->stack[cpu->st] = a1;
+        printf("cpu->st++; cpu->stack[cpu->st] = %ld;\n", a1);
     }
 }
 IVO(1c) (CPU, ARGS) {
     cpu->mem[a1] = cpu->stack[cpu->st];
     cpu->st--;
+    printf("cpu->mem[%ld] = cpu->stack[cpu->st]; cpu->st--;\n", a1);
 }
 IVO(1d) (CPU, ARGS) {
-    a3_1  {
+    a3_1 {
         cpu->mem[01] = cpu->mem[a1] % cpu->mem[a2];
+        printf("cpu.mem[1] = cpu.mem[%ld] % cpu.mem[%ld];\n", a1, a2);
+
     }
     a3_2 {
         cpu->mem[01] = cpu->mem[a1] % a2;
+        printf("cpu.mem[1] = cpu.mem[%ld] % %ld;\n", a1, a2);
     }
     else {
         cpu->mem[01] = a1 % a2;
+        printf("cpu.mem[1] = %ld % %ld;\n", a1, a2);
     }
 }

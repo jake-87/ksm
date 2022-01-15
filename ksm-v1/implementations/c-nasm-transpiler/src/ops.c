@@ -404,24 +404,45 @@ IVO(1b) (CPU, ARGS) {
     if (a2 == 1) {
         cpu->st++;
         cpu->stack[cpu->st] = cpu->mem[a1];
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    push rax\n");
     }
     else {
         cpu->st++;
         cpu->stack[cpu->st] = a1;
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    push rax\n");
     }
 }
 IVO(1c) (CPU, ARGS) {
     cpu->mem[a1] = cpu->stack[cpu->st];
     cpu->st--;
+    printf("    pop rax\n");
+    printf("    mov qword [rcx + %ld * 8], rax\n", a1);
 }
 IVO(1d) (CPU, ARGS) {
-    a3_1  {
-        cpu->mem[01] = cpu->mem[a1] % cpu->mem[a2];
+    if_rcx_mod
+    a3_1 {
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, [rcx + %ld * 8]\n", a2);
+        printf("    idiv rax, rbx\n");
+        printf("    mov qword [rcx + 1 * 8], rdx\n");
     }
     a3_2 {
-        cpu->mem[01] = cpu->mem[a1] % a2;
+        cpu->mem[01] = cpu->mem[a1] & a2;
+        if_rcx_mod
+        printf("    mov qword rax, [rcx + %ld * 8]\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    idiv rax, rbx\n");
+        printf("    mov qword [rcx + 1 * 8], rdx\n");
     }
     else {
-        cpu->mem[01] = a1 % a2;
-    }
+        cpu->mem[01] = a1 & a2;
+        if_rcx_mod
+        printf("    mov qword rax, %ld\n", a1);
+        printf("    mov qword rbx, %ld\n", a2);
+        printf("    idiv rax, rbx\n");
+        printf("    mov qword [rcx + 1 * 8], rdx\n");
 }
