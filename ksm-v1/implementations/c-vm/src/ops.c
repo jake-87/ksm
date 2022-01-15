@@ -197,3 +197,28 @@ IVO(1a) (CPU, int64_t concat) {
         cpu->mem[00] = concat / 4;
     }
 }
+IVO(1b) (CPU, ARGS) {
+    if (a2 == 1) {
+        cpu->st++;
+        cpu->stack[cpu->st] = cpu->mem[a1];
+    }
+    else {
+        cpu->st++;
+        cpu->stack[cpu->st] = a1;
+    }
+}
+IVO(1c) (CPU, ARGS) {
+    cpu->mem[a1] = cpu->stack[cpu->st];
+    cpu->st--;
+}
+IVO(1d) (CPU, ARGS) {
+    a3_1  {
+        cpu->mem[01] = cpu->mem[a1] % cpu->mem[a2];
+    }
+    a3_2 {
+        cpu->mem[01] = cpu->mem[a1] % a2;
+    }
+    else {
+        cpu->mem[01] = a1 % a2;
+    }
+}

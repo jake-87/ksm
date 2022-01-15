@@ -1,7 +1,9 @@
 module ops
+    use fstack
     type cpu_t
         integer(kind = 8), dimension(:), allocatable :: mem
         integer(kind = 8) :: cmp
+        type(fs_stack) :: stack
     end type cpu_t
     contains
     subroutine op00(cpu, a1, a2, a3)
@@ -256,4 +258,32 @@ module ops
             cpu%mem(0) = concat / 4
         end if
     end subroutine op1a
+
+    subroutine op1b(cpu, a1, a2, a3)
+        type(cpu_t), intent(inout) :: cpu
+        integer(kind = 8), intent(in) :: a1, a2, a3
+        if (a2 == 1) then
+            call fs_push(cpu%stack, cpu%mem(a1))
+        else
+            call fs_push(cpu%stack, a1)
+        end if
+    end subroutine op1b
+
+    subroutine op1c(cpu, a1, a2, a3)
+        type(cpu_t), intent(inout) :: cpu
+        integer(kind = 8), intent(in) :: a1, a2, a3
+        call fs_pop(cpu%stack, cpu%mem(a1))
+    end subroutine op1c
+
+    subroutine op1d(cpu, a1, a2, a3)
+        type(cpu_t), intent(inout) :: cpu
+        integer(kind = 8), intent(in) :: a1, a2, a3
+        if (a3 == 1) then
+            cpu%mem(1) = modulo(cpu%mem(a1) , cpu%mem(a2))
+        else if (a3 == 2) then
+            cpu%mem(1) = modulo(cpu%mem(a1) , a2)
+        else
+            cpu%mem(1) = modulo(a1 , a2)
+        end if
+    end subroutine op1d
 end module ops 

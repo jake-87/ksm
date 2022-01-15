@@ -163,6 +163,17 @@ async function op1a(cpu, concat) {
         await cpu.sv(0, Math.floor(concat / 4));
     }
 }
+async function op1b(cpu, a1, a2, a3) {
+    if (a2 == 1) {
+        cpu.stack.push(await cpu.gv(a1));
+    }
+    else {
+        cpu.stack.push(a1);
+    }
+}
+async function op1c(cpu, a1, a2, a3) {
+    await cpu.sv(a1, cpu.stack.pop());
+}
 module.exports = {
     op00,
     op01,
@@ -191,4 +202,7 @@ module.exports = {
     op18,
     op19,
     op1a,
+    op1b,
+    op1c,
+    op1d
 }

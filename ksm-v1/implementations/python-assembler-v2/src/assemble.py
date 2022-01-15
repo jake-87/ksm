@@ -114,6 +114,9 @@ operations_dict = {
     "lta": ("18", op_generic),
     "jmpgt": ("19", op_concat),
     "jmplt": ("1a", op_concat),
+    "pop": ("1b", op_one_arg),
+    "push": ("1c", op_one_arg_no_mode),
+    "mod": ("1d", op_generic),
 }
 
 loops_list = [

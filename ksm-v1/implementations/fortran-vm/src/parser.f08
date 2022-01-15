@@ -59,6 +59,12 @@ module parser
                 call op19(cpu, concat)
             case(26)
                 call op1a(cpu, concat)
+            case(27)
+                call op1b(cpu, a1, a2, a3)
+            case(28)
+                call op1c(cpu, a1, a2, a3)
+            case(29)
+                call op1d(cpu, a1, a2, a3)
             case default
                 print *, "unreachable"
             end select
@@ -78,6 +84,7 @@ module parser
             character(:), allocatable :: op, a1, a2, a3, concat
             
             allocate(cpu%mem(memory))
+            cpu%stack = fs_create_stack(integer(memory))
             do i = 0, memory
                 cpu%mem(i) = 0
             end do

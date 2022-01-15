@@ -30,6 +30,9 @@ void (*op_table[])() = {
     op18,
     op19,
     op1a,
+    op1b,
+    op1c,
+    op1d,
 };
 char * special_ins[] = {"08", "09", "0a", "0d", "0e", "0f", "15", "16", "19", "1a"};
 int32_t special_ins_size = 10;

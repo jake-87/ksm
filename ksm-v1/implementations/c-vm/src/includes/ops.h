@@ -8,6 +8,8 @@
 typedef struct _cpu_t {
     int64_t * mem;
     int64_t cmp;
+    int64_t stack[1024];
+    int64_t st;
 } cpu_t;
 #define CPU cpu_t * cpu
 // makes stuff quicker
@@ -42,3 +44,6 @@ IVO(17) (CPU, ARGS);
 IVO(18) (CPU, ARGS);
 IVO(19) (CPU, int64_t concat);
 IVO(1a) (CPU, int64_t concat);
+IVO(1b) (CPU, ARGS);
+IVO(1c) (CPU, ARGS);
+IVO(1d) (CPU, ARGS);

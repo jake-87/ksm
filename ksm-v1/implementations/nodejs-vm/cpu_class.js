@@ -3,6 +3,7 @@ class CPU {
         this.memsize = memsize;
         this.mem = {};
         this.cmp = 0;
+        this.stack = [];
         for (let k = 0; k < memsize; k++) {
             this.mem[String(k)] = 0;
         }
