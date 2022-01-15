@@ -139,7 +139,7 @@ def gen(stat: status, tok: str) -> str:
     elif tok[0] == "hlt":
         ret += gen_hlt(tok[1])
     elif tok[0] in ("jmp", "je", "jne", "jg", "jl"):
-        # jumps are already correct nasm syntax
+        # jumps are already correct nasm syntax ( i wonder why... )
         ret += " ".join(tok) + "\n"
     else:
         # Could be a lable, could be some random stuff, so we just print it

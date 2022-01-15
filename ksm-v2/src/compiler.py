@@ -13,10 +13,7 @@ def main():
     for asm in data:
         asm = asm.strip()
         tmp = generate_asm.gen(status, asm)
-        if tmp[0] == 0:
-            nasm_code += tmp[1]
-        else:
-            data_section += tmp[1]
+        nasm_code += tmp[1]
     print(nasm_code + data_section)
     exit(0)
 if __name__ == "__main__":
