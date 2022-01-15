@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jan 14 11:29:37 2022
+# Make data base, printed on Sat Jan 15 14:41:25 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-84047729-2f45-4c92-968e-9a365000c4b5.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-98cd36e1-e4e5-4e01-97c8-f026da9fe9b9.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -93,7 +93,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 2081
+VSCODE_PID = 5579
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -101,7 +101,7 @@ VSCODE_PID = 2081
 # environment
 CHROME_DESKTOP = Electron.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-du7F3BGMYs,guid=32845435bfb32b8c69cb11d261e0c382
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-FlRG4H9wDe,guid=679c79977eb69f5b2003bcb261e2331a
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -193,9 +193,9 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 
 # Directories
 
-# . (device 66306, inode 3540408): 11 files, no impossibilities.
+# . (device 66306, inode 3540408): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -245,12 +245,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 169 B / avg = 8 B
-# current buf: size = 8162 B / used = 169 B / count = 19 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 20 / storage = 182 B / avg = 9 B
+# current buf: size = 8162 B / used = 182 B / count = 20 / avg = 9 B
 
-# strcache performance: lookups = 22 / hit rate = 13%
+# strcache performance: lookups = 23 / hit rate = 13%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
-# Finished Make data base on Fri Jan 14 11:29:37 2022
+# Load=20/8192=0%, Rehash=0, Collisions=0/23=0%
+# Finished Make data base on Sat Jan 15 14:41:25 2022
 
  
