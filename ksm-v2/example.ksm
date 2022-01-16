@@ -1,22 +1,8 @@
-mov r9, 12334
-mov r10, m12
-mov r9 0xa
-mov r10, r9
-div r9, 10
-mul 10, 10
-another_lable:
-sub m1, r9
-cmp m2, r14
-div 10, m4
-lable:
+mov r9, [123]
+mov r14, [123]
 raw_asm {
-    ; super high
-    ; performance
-    ; coding
-    ; right here
-    ksm_load rax, m123
-    ksm_store m123, rdi
+    ksm_load rax, [0x123]
 }
-jmp lable
-div 10, 10
-mov r9, 10
+push m0x10
+pop r9
+peek r10

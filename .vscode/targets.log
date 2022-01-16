@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jan 15 21:12:52 2022
+# Make data base, printed on Sun Jan 16 15:10:21 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-212ffd92-6330-4587-837c-a9b05b3e71d6.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/1000/vscode-ipc-87031e97-12eb-477d-a907-1f60946d7302.sock
 # environment
 VSCODE_CWD = /home/jake
 # environment
@@ -93,7 +93,7 @@ LC_COLLATE = C
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1731
+VSCODE_PID = 1014
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -101,7 +101,7 @@ VSCODE_PID = 1731
 # environment
 CHROME_DESKTOP = Electron.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-FlRG4H9wDe,guid=679c79977eb69f5b2003bcb261e2331a
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-AuA3z6hikR,guid=f6aa63cece7347fd425f502961e39a90
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -169,7 +169,7 @@ HOME = /home/jake
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /tmp/1000/vscode-7c3947cf-1.63.0-main.sock
+VSCODE_IPC_HOOK = /tmp/1000/vscode-7c3947cf-1.63.2-main.sock
 # environment
 TERM = linux
 # default
@@ -251,6 +251,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=0/20=0%
-# Finished Make data base on Sat Jan 15 21:12:52 2022
+# Finished Make data base on Sun Jan 16 15:10:21 2022
 
  

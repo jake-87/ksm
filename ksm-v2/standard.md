@@ -28,7 +28,11 @@ RAX, RBX, etc are *not* avalible, and are used as scratch registers for the comp
 
 ### Manual memory locations:
 
-`[]` style syntax is now used for memory locations, eg: `mov rax, [0x123]`
+The old style `m0x1` style syntax is still avalible; however, additional syntax is also avalible in the form of `[]`. This serves as a sort of offset, eg in c:
+
+`[0x123]` = `*(ksm_mem_pointer + 0x123)`<br>
+`[rax]` = `*(ksm_mem_pointer + rax)` <br>
+`[m0x123]` = `*(ksm_mem_pointer + *(ksm_mem_pointer + 0x123))`<br>
 
 ## Instructions:
 
