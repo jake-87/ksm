@@ -6,10 +6,10 @@ void flusher() {
     fflush(stderr);
 }
 void print_hex(int64_t a) {
-    printf("%c0x%lx\n", a < 0 ? '-' : ' ', (uint64_t) labs(a));
+    printf("%c0x%lx", a < 0 ? '-' : ' ', (uint64_t) labs(a));
     /*
         Broken down:
-        
+
         %c : a < 0 ? '-' : ' '
         This prints either a minus sign if a is negative, or a space if it is not.
 
@@ -23,10 +23,14 @@ void print_hex(int64_t a) {
     flusher();
 }
 void print_int(int64_t a) {
-    printf("%ld\n", a);
+    printf("%ld", a);
     flusher();
 }
 void print_string(char * a) {
-    puts(a);
+    printf("%s", a);
     flusher();
+}
+
+void print_newline() {
+    puts("");
 }

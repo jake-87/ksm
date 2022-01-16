@@ -8,7 +8,8 @@ class status():
     register_list = ("r9", "r10", "r11", "r12", "r13", "r14", "r15")
     # Stands for Unrestriced Extension
     ue = ("r9", "r10", "r11", "r12", "r13", "r14", "r15", "rax","rbx","rcx","rdx","rsi","rdi","rsp","rbp")
-
+    strings = {}
+    inc = 0
 # Helper function that just returns some stuff we need, eg memory allocation
 def prelude(k: int) -> str:
     return f"""
@@ -23,6 +24,9 @@ section .text
     extern print_int
     extern print_hex
     extern print_string
+    extern print_newline
+.newline:
+    .string ""
 main:
     mov qword [argc], rdi
     mov qword [argv], rsi
@@ -145,11 +149,58 @@ def gen_stack(a1: str, m: str) -> str:
         fin += f"   push rax\n"
     return fin
 
+# Generate halt
 def gen_hlt(a1: str) -> str:
     fin = ""
     fin += mov_arg_to_reg(a1, "rdi")
     fin += f"   mov qword rax, 60\n"
     fin += f"   syscall\n"
+    return fin
+# These two functions are needed because three of the user registers we have defined, r9-11
+# are technically scratch registers and do not need to stay their current values
+def pre_syscall():
+    fin = ""
+    fin += "   push r9\n"
+    fin += "   push r10\n"
+    fin += "   push r11\n"
+    return fin
+
+def post_syscall():
+    fin = ""
+    fin += "   pop r11\n"
+    fin += "   pop r10\n"
+    fin += "   pop r9\n"
+    return fin
+
+# Generate interger print
+def gen_print_int(a1: str, print: str) -> str:
+    fin = ""
+    fin += pre_syscall()
+    fin += mov_arg_to_reg(a1, "rdi")
+    fin += f"   call {print}\n"
+    fin += post_syscall()
+    return fin
+
+def gen_print_string(st: status, a1: str) -> str:
+    fin = ""
+    fin += pre_syscall()
+    better_a1 = "_".join(a1.split(" ")) + "__KSM_INTERNAL"
+    if better_a1 not in st.strings:
+        st.strings[better_a1] = better_a1
+        fin += f"._{better_a1}_:\n"
+        fin += f'   .string "{a1}"\n'
+        fin += f"___{st.inc}___:\n"
+        st.inc += 1
+    fin += f"   mov qword rdi, ._{better_a1}_\n"
+    fin += f"   call print_string\n"
+    fin += post_syscall()
+    return fin
+
+def gen_print_newline() -> str:
+    fin = ""
+    fin += pre_syscall()
+    fin += f"   call print_newline\n"
+    fin += post_syscall()
     return fin
 # Generate a token
 def gen(stat: status, tok: str) -> str:
@@ -203,8 +254,18 @@ def gen(stat: status, tok: str) -> str:
         ret += gen_cmp(tok[1], tok[2])
     elif tok[0] == "hlt":
         ret += gen_hlt(tok[1])
+    elif tok[0] == "print_string":
+        # TLDR: This, in order: Joins the remaining tokens that were split earlier, 
+        # removes the first one, which is the command, then removes the first and last char
+        # which should always be the quotes around the string.
+        tok = [tok[0], " ".join(tok[1:len(tok)])[1:-1]]
+        ret += gen_print_string(status, tok[1])
+    elif tok[0] == "print_newline":
+        ret += gen_print_newline()
     elif tok[0] in ("pop", "peek", "push"):
         ret += gen_stack(tok[1], tok[0])
+    elif tok[0] in ("print_int", "print_hex"):
+        ret += gen_print_int(tok[1], tok[0])
     elif tok[0] in ("jmp", "je", "jne", "jg", "jl"):
         # jumps are already correct asm syntax ( i wonder why... )
         ret += " ".join(tok) + "\n"

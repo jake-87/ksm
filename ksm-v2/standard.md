@@ -113,12 +113,16 @@ raw_asm
 - - The brackets cannot be on the same line as the commands,  eg `mov rax, rbx \n}` is fine, but `mov rax, rbx }` is not.
 <br>
 
-- print_str string
+- print_str "string"
 - - Prints a string to stdout.
 <br>
 
 - print_int src
 - - Prints a number to stdout.
+<br>
+
+- print_newline
+- - Does what it says on the tin.
 <br>
 
 - print_hex src
