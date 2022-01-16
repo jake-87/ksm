@@ -20,6 +20,9 @@ section .data
 section .text
     global main
     extern malloc
+    extern print_int
+    extern print_hex
+    extern print_string
 main:
     mov qword [argc], rdi
     mov qword [argv], rsi
@@ -142,6 +145,12 @@ def gen_stack(a1: str, m: str) -> str:
         fin += f"   push rax\n"
     return fin
 
+def gen_hlt(a1: str) -> str:
+    fin = ""
+    fin += mov_arg_to_reg(a1, "rdi")
+    fin += f"   mov qword rax, 60\n"
+    fin += f"   syscall\n"
+    return fin
 # Generate a token
 def gen(stat: status, tok: str) -> str:
     tok = re.split("\\s+(?![^\\[]*\\])", tok)
@@ -202,6 +211,7 @@ def gen(stat: status, tok: str) -> str:
     else:
         # Could be a lable, could be some random stuff, so we just print it
         ret += " ".join(tok) + "\n"
+    
     # It's more fun this way.
     a, b, c = cursed.evil(tok)
     return (0, "\n" + ret + f'; {a} {b} {c}\n\n')

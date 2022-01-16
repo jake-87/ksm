@@ -6,3 +6,4 @@ raw_asm {
 push m0x10
 pop r9
 peek r10
+hlt [123]

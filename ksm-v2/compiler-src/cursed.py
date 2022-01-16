@@ -1,5 +1,5 @@
 def evil(tok):
-    # yes. there are better ways of doing this. this one is more fun tho.
+    # We don't talk about this file.
     try:
         a = tok[0]
         try:
