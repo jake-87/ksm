@@ -15,4 +15,5 @@ void print_int(int64_t a) {
 }
 void print_string(char * a) {
     puts(a);
+    flusher();
 }

@@ -6,7 +6,10 @@ class status():
     is_in_raw: bool = 0
     rcx: bool = 0
     register_list = ("r9", "r10", "r11", "r12", "r13", "r14", "r15")
+    # Stands for Unrestriced Extension
     ue = ("r9", "r10", "r11", "r12", "r13", "r14", "r15", "rax","rbx","rcx","rdx","rsi","rdi","rsp","rbp")
+
+# Helper function that just returns some stuff we need, eg memory allocation
 def prelude(k: int) -> str:
     return f"""
 bits 64
@@ -29,7 +32,8 @@ main:
     mov qword rcx, [pointer]
 ; end prelude
 """
-# Helper function that just returns some stuff we need, eg memory allocation
+
+# Converts a ksm memory loc or number into decimal
 def td(n: str) -> int:
     if "m" in n and "x" in n:
         return int(n[1:len(n)], 16)
@@ -39,6 +43,8 @@ def td(n: str) -> int:
         return int(n, 16)
     else:
         return int(n)
+
+# Moves first argument into given register. `ue` lets it set to any register, not just KSM allowed registers.
 def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
     if a in status.register_list or ue and a in status.ue:
         if "[" in a:
@@ -57,6 +63,7 @@ def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
         else:
             return f"   mov qword {reg}, {td(a)}\n"
 
+# Moves from reg into first argument. See `ue` above.
 def mov_reg_from_arg(a: str, reg: str, ue: bool = False) -> str:
     print(a, reg, ue)
     if a in status.register_list or ue and a in status.ue:
@@ -66,6 +73,7 @@ def mov_reg_from_arg(a: str, reg: str, ue: bool = False) -> str:
     else:
         return f"   mov qword {td(a)}, {reg}\n"
 
+# Generates move instructions
 def gen_mov(a1: str, a2: str, ue: bool = False) -> str:
     fin = ""
     # a2 is src. a1 is dest.
@@ -73,6 +81,7 @@ def gen_mov(a1: str, a2: str, ue: bool = False) -> str:
     fin += mov_reg_from_arg(a1, "rax", ue)
     return fin
 
+# Raw mov for use in `raw_asm` section. Accounts for allowance of use of `rax`.
 def gen_ksm_raw_mov(a1: str, a2: str) -> str:
     fin = ""
     if a1 == "rax":
@@ -85,6 +94,7 @@ def gen_ksm_raw_mov(a1: str, a2: str) -> str:
     fin += f"   pop {tmp}"
     return fin
 
+# Generate math instruction
 def gen_math(a1: str, a2: str, op: str) -> str:
     fin = ""
     # a2 is src. a1 is dest.
@@ -94,6 +104,7 @@ def gen_math(a1: str, a2: str, op: str) -> str:
     fin += mov_reg_from_arg(a1, "rax")
     return fin
 
+# Generate compare instruction
 def gen_cmp(a1: str, a2: str) -> str:
     fin = ""
     # a2 is src. a1 is dest.
@@ -102,6 +113,7 @@ def gen_cmp(a1: str, a2: str) -> str:
     fin += f"   cmp rax, rbx\n"
     return fin
 
+# Generate division or modulo instruction
 def gen_divmod(a1: str, a2: str, m: int) -> str:
     fin = ""
     # a2 is src. a1 is dest. m decides whether to divide or modulo
@@ -115,6 +127,7 @@ def gen_divmod(a1: str, a2: str, m: int) -> str:
     fin += mov_reg_from_arg(a1, reg)
     return fin
 
+# Generate stack instruction
 def gen_stack(a1: str, m: str) -> str:
     fin = ""
     if m == "push":
@@ -128,6 +141,8 @@ def gen_stack(a1: str, m: str) -> str:
         fin += gen_mov(a1, "rax", True)
         fin += f"   push rax\n"
     return fin
+
+# Generate a token
 def gen(stat: status, tok: str) -> str:
     tok = re.split("\\s+(?![^\\[]*\\])", tok)
     ret = ""
@@ -182,10 +197,11 @@ def gen(stat: status, tok: str) -> str:
     elif tok[0] in ("pop", "peek", "push"):
         ret += gen_stack(tok[1], tok[0])
     elif tok[0] in ("jmp", "je", "jne", "jg", "jl"):
-        # jumps are already correct nasm syntax ( i wonder why... )
+        # jumps are already correct asm syntax ( i wonder why... )
         ret += " ".join(tok) + "\n"
     else:
         # Could be a lable, could be some random stuff, so we just print it
         ret += " ".join(tok) + "\n"
+    # It's more fun this way.
     a, b, c = cursed.evil(tok)
     return (0, "\n" + ret + f'; {a} {b} {c}\n\n')

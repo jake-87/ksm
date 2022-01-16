@@ -110,7 +110,7 @@ raw_asm
     commands
 }
 ```
-- - The brackets cannot be on the same line as the commands.
+- - The brackets cannot be on the same line as the commands,  eg `mov rax, rbx \n}` is fine, but `mov rax, rbx }` is not.
 <br>
 
 - print_str string
