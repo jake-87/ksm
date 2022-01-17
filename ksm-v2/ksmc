@@ -14,7 +14,7 @@ def run_command(args: list):
     return stdout
 def main():
     if len(sys.argv) < 2:
-        print("USAGE: ./ksmc <path to ksm file>")
+        print("USAGE: ./ksmc <path to ksm file> [output name]")
         exit(1)
     else:
         file = sys.argv[1]
@@ -57,8 +57,11 @@ def main():
         stdout = run_command(["nasm", "-f", "elf64", "tmp/output.nasm", "-F", "dwarf", "-o", "tmp/output.o"])
         if stdout.strip():
             print(stdout)
-
-        stdout = run_command(["cc", "-o", "output", "tmp/output.o", "tmp/helpers.o", "-static"])
+        if len(sys.argv) == 3:
+            output = sys.argv[2]
+        else:
+            output = "output"
+        stdout = run_command(["cc", "-o", output, "tmp/output.o", "tmp/helpers.o", "-static"])
         if stdout.strip():
             print(stdout)
 if __name__ == "__main__":
