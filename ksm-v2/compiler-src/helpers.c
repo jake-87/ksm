@@ -33,6 +33,7 @@ void print_string(char * a) {
 
 void print_newline() {
     puts("");
+    flusher();
 }
 
 int64_t open_file(char ** argv, int which) {
