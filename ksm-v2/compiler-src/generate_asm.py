@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import re
 import cursed
+import sys
 @dataclass
 class status_t():
     is_in_raw: bool = 0
@@ -12,12 +13,12 @@ class status_t():
     inc = 0
 # Helper function that just returns some stuff we need, eg memory allocation
 def prelude(k: int) -> str:
-    return f"""
+    return [f"""
 bits 64
 section .data
     pointer dq 1
     argv dq 1
-    argc dq 1
+    argc dq 1\n""", f"""
 section .text
     global main
     extern malloc
@@ -26,8 +27,8 @@ section .text
     extern print_string
     extern print_newline
     extern open_file
-.newline:
-    .string ""
+    extern file_getchar
+    extern file_feof
 main:
     mov qword [argc], rdi
     mov qword [argv], rsi
@@ -39,7 +40,7 @@ main:
     mov qword [pointer], rax
     mov qword rcx, [pointer]
 ; end prelude
-"""
+"""]
 
 # Converts a ksm memory loc or number into decimal
 def td(n: str) -> int:
@@ -61,7 +62,7 @@ def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
             return f"   mov qword {reg}, {a}\n"
     elif "m" in a:
         if "[" in a:
-            fin = f"   mov qword rbx, [rcx + {a[2:-1]} * 8]\n"
+            fin = f"   mov qword rbx, [rcx + {td(a[1:-1])} * 8]\n"
             return fin + f"   mov qword {reg}, [rcx + rbx * 8]\n"
         else:
             return f"   mov qword {reg}, [rcx + {td(a)} * 8]\n"
@@ -73,7 +74,6 @@ def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
 
 # Moves from reg into first argument. See `ue` above.
 def mov_reg_from_arg(a: str, reg: str, ue: bool = False) -> str:
-    print(a, reg, ue)
     if a in status_t.register_list or ue and a in status_t.ue:
         return f"   mov qword {a}, {reg}\n"
     elif "m" in a:
@@ -157,6 +157,7 @@ def gen_hlt(a1: str) -> str:
     fin += f"   mov qword rax, 60\n"
     fin += f"   syscall\n"
     return fin
+
 # These two functions are needed because three of the user registers we have defined, r9-11
 # are technically scratch registers and do not need to stay their current values
 def pre_syscall():
@@ -186,19 +187,17 @@ def gen_print_int(st: status_t, a1: str, print: str) -> str:
 
 # Print a string
 def gen_print_string(st: status_t, a1: str) -> str:
-    fin = ""
-    fin += pre_syscall()
+    fin = ["", ""]
+    fin[1] += pre_syscall()
     better_a1 = "_".join(a1.split(" ")) + "__KSM_INTERNAL"
     # If we don't already have the string, make it
     if better_a1 not in st.strings:
         st.strings[better_a1] = better_a1
-        fin += f"._{better_a1}_:\n"
-        fin += f'   .string "{a1}"\n'
-        fin += f"___{st.inc}___:\n"
-        st.inc += 1
-    fin += f"   mov qword rdi, ._{better_a1}_\n"
-    fin += f"   call print_string\n"
-    fin += post_syscall()
+        fin[0] += f'    _{better_a1}_: db "{a1}"\n'
+        # honestly couldn't tell you if this is needed, but i *think* it is
+    fin[1] += f"   mov qword rdi, _{better_a1}_\n"
+    fin[1] += f"   call print_string\n"
+    fin[1] += post_syscall()
     st.rcx = 1
     return fin
 
@@ -223,6 +222,30 @@ def gen_open_file(st: status_t, a1: str, a2: str) -> str:
     fin += post_syscall()
     st.rcx = 1
     return fin
+
+# Gets a char from a FILE *
+def gen_file_getchar(st: status_t, a1: str, a2: str) -> str:
+    fin = ""
+    fin += pre_syscall()
+    fin += mov_arg_to_reg(a1, "rdi")
+    fin += f"   call file_getchar\n"
+    fin += mov_reg_from_arg(a2, "rax")
+    fin += post_syscall()
+    st.rcx = 1
+    return fin
+
+# `feof`s a FILE *
+def gen_file_feof(st: status_t, a1: str, a2: str) -> str:
+    fin = ""
+    fin += pre_syscall()
+    fin += mov_arg_to_reg(a1, "rdi")
+    fin += f"   call file_feof\n"
+    fin += mov_reg_from_arg(a2, "rax")
+    fin += post_syscall()
+    st.rcx = 1
+    return fin
+    
+
 
 
 # Generate a token
@@ -249,6 +272,7 @@ def gen(status: status_t, tok: str) -> str:
             return (0, "\n\n; Start of raw_asm segment\n")
     ret = ""
     normal_ret = 1
+    section = 0
     # rcx has been modified
     if status.rcx:
         ret += f"   mov qword rcx, [pointer]\n"
@@ -276,12 +300,20 @@ def gen(status: status_t, tok: str) -> str:
         ret += gen_hlt(tok[1])
     elif tok[0] == "open_file":
         ret += gen_open_file(status, tok[1], tok[2])
+    elif tok[0] == "file_getchar":
+        ret += gen_file_getchar(status, tok[1], tok[2])
+    elif tok[0] == "file_feof":
+        ret += gen_file_feof(status, tok[1], tok[2])
     elif tok[0] == "print_string":
         # TLDR: This, in order: Joins the remaining tokens that were split earlier, 
         # removes the first one, which is the command, then removes the first and last char
         # which should always be the quotes around the string.
         tok = [tok[0], " ".join(tok[1:len(tok)])[1:-1]]
-        ret += gen_print_string(status, tok[1])
+        pre_ret = ret
+        ret = []
+        ret = gen_print_string(status, tok[1])
+        ret[1] = pre_ret + ret[1]
+        section = 1
     elif tok[0] == "print_newline":
         ret += gen_print_newline(status)
     elif tok[0] in ("pop", "peek", "push"):
@@ -297,4 +329,7 @@ def gen(status: status_t, tok: str) -> str:
     
     # It's more fun this way.
     a, b, c = cursed.evil(tok)
-    return (0, "\n" + ret + f'; {a} {b} {c}\n\n')
+    if section == 0:
+        return (section, "\n" + ret + f'; {a} {b} {c}\n\n')
+    else:
+        return (section, ret, f"\n; {' '.join(tok)}\n")

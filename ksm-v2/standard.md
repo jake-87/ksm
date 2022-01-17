@@ -133,9 +133,9 @@ raw_asm
 - - Opens the nth argument of the program, places fp in dest.
 <br>
 
-- fgetc dest, src
+- file_getchar dest, src
 - - Using src as the file pointer, place character in dest.
 <br>
 
-- feof dest, src
+- file_isend dest, src
 - - Using src as the file pointer, place result of `feof` call in dest.

@@ -1,15 +1,3 @@
-mov r9, [123]
-mov r14, [123]
-raw_asm {
-    ksm_load rax, [0x123]
-}
-push m0x10
-pop r9
-peek r10
-hlt [123]
-print_string "one two three four"
-print_int [123]
-print_hex [123]
+print_string "one two thee"
 print_newline
-print_string "one two three four"
-open_file r9, [m10]
+hlt 9

@@ -1,0 +1,65 @@
+#! /usr/bin/env python3
+import sys
+from io import StringIO 
+import subprocess
+import os
+
+def run_command(args: list):
+    ret = subprocess.run(args, capture_output=True)
+    stdout = ret.stdout.decode("utf-8")
+    stderr = ret.stderr.decode("utf-8")
+    if stderr.strip():
+        print(stderr)
+        exit(1)
+    return stdout
+def main():
+    if len(sys.argv) < 2:
+        print("USAGE: ./ksmc <path to ksm file>")
+        exit(1)
+    else:
+        file = sys.argv[1]
+        with open(file, "r") as f:
+            data = f.read()
+        split = data.replace(",", " ").replace("[", "").replace("]", "").replace("\n", " ").split(" ")
+        test = [0 for i in range(len(split))]
+        count = 0
+        # This finds the largest memory location in the code, so that we can make the memory only that big
+        for k in split:
+            b = k.strip()
+            # only look at mem locations
+            if b and b[0] == "m":
+                try:
+                    test[count] = int(b[1:len(b)])
+                    count += 1
+                # it's not a mem location, but an instrucion or smth
+                except ValueError:
+                    pass
+        test = [i for i in test if i]
+        test.sort()
+        if test:
+            mem = test[-1]
+        else:
+            mem = 1
+        # Make temp path
+        if not os.path.isdir("./tmp"):
+            os.mkdir("./tmp")
+
+        # Run the actual compiler
+        stdout = run_command(["python3", "compiler-src/compiler.py", sys.argv[1], str(mem)])
+        with open("./tmp/output.nasm", "w") as f:
+            f.write(stdout)
+
+        # Compile the helper
+        stdout = run_command(["cc", "compiler-src/helpers.c", "-o", "tmp/helpers.o", "-c", "-Wall", "-Wextra"])
+        if stdout.strip():
+            print(stdout)
+        
+        stdout = run_command(["nasm", "-f", "elf64", "tmp/output.nasm", "-F", "dwarf", "-o", "tmp/output.o"])
+        if stdout.strip():
+            print(stdout)
+
+        stdout = run_command(["cc", "-o", "output", "tmp/output.o", "tmp/helpers.o", "-static"])
+        if stdout.strip():
+            print(stdout)
+if __name__ == "__main__":
+    main()

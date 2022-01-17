@@ -39,3 +39,16 @@ int64_t open_file(char ** argv, int which) {
     FILE * fp = fopen(argv[which], "r");
     return (int64_t) fp;
 }
+
+int64_t file_getchar(int64_t fp) {
+    FILE * f = (FILE *) fp;
+    char c = fgetc(f);
+    return (int64_t) c;
+}
+
+// we need a seperate feof function because feof returns an `int`, whereas we need `int64_t`
+int64_t file_feof(int64_t fp) {
+    FILE * f = (FILE *) fp;
+    int i = feof(f);
+    return (int64_t) i;
+}
