@@ -34,3 +34,8 @@ void print_string(char * a) {
 void print_newline() {
     puts("");
 }
+
+int64_t open_file(char ** argv, int which) {
+    FILE * fp = fopen(argv[which], "r");
+    return (int64_t) fp;
+}

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import re
 import cursed
 @dataclass
-class status():
+class status_t():
     is_in_raw: bool = 0
     rcx: bool = 0
     register_list = ("r9", "r10", "r11", "r12", "r13", "r14", "r15")
@@ -25,6 +25,7 @@ section .text
     extern print_hex
     extern print_string
     extern print_newline
+    extern open_file
 .newline:
     .string ""
 main:
@@ -53,15 +54,15 @@ def td(n: str) -> int:
 
 # Moves first argument into given register. `ue` lets it set to any register, not just KSM allowed registers.
 def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
-    if a in status.register_list or ue and a in status.ue:
+    if a in status_t.register_list or ue and a in status_t.ue:
         if "[" in a:
             return f"   mov qword {reg}, [rcx + {a[1:-1]} * 8]\n"
         else:
             return f"   mov qword {reg}, {a}\n"
     elif "m" in a:
         if "[" in a:
-            fin = f"   mov qword rbx, [rcx + {a[1:-1]} * 8]\n"
-            return fin + f"    mov qword {reg}, [rcx + rbx * 8]\n"
+            fin = f"   mov qword rbx, [rcx + {a[2:-1]} * 8]\n"
+            return fin + f"   mov qword {reg}, [rcx + rbx * 8]\n"
         else:
             return f"   mov qword {reg}, [rcx + {td(a)} * 8]\n"
     else:
@@ -73,7 +74,7 @@ def mov_arg_to_reg(a: str, reg: str, ue: bool = False) -> str:
 # Moves from reg into first argument. See `ue` above.
 def mov_reg_from_arg(a: str, reg: str, ue: bool = False) -> str:
     print(a, reg, ue)
-    if a in status.register_list or ue and a in status.ue:
+    if a in status_t.register_list or ue and a in status_t.ue:
         return f"   mov qword {a}, {reg}\n"
     elif "m" in a:
         return f"   mov qword [rcx + {td(a)} * 8], {reg}\n"
@@ -173,18 +174,22 @@ def post_syscall():
     return fin
 
 # Generate interger print
-def gen_print_int(a1: str, print: str) -> str:
+def gen_print_int(st: status_t, a1: str, print: str) -> str:
     fin = ""
     fin += pre_syscall()
     fin += mov_arg_to_reg(a1, "rdi")
     fin += f"   call {print}\n"
     fin += post_syscall()
+    st.rcx = 1
     return fin
 
-def gen_print_string(st: status, a1: str) -> str:
+
+# Print a string
+def gen_print_string(st: status_t, a1: str) -> str:
     fin = ""
     fin += pre_syscall()
     better_a1 = "_".join(a1.split(" ")) + "__KSM_INTERNAL"
+    # If we don't already have the string, make it
     if better_a1 not in st.strings:
         st.strings[better_a1] = better_a1
         fin += f"._{better_a1}_:\n"
@@ -194,16 +199,34 @@ def gen_print_string(st: status, a1: str) -> str:
     fin += f"   mov qword rdi, ._{better_a1}_\n"
     fin += f"   call print_string\n"
     fin += post_syscall()
+    st.rcx = 1
     return fin
 
-def gen_print_newline() -> str:
+
+# Print a newline
+def gen_print_newline(st: status_t) -> str:
     fin = ""
     fin += pre_syscall()
     fin += f"   call print_newline\n"
     fin += post_syscall()
+    st.rcx = 1
     return fin
+
+# Opens a file
+def gen_open_file(st: status_t, a1: str, a2: str) -> str:
+    fin = ""
+    fin += pre_syscall()
+    fin += f"   mov qword rdi, argv\n"
+    fin += mov_arg_to_reg(a2, "rsi")
+    fin += f"   call open_file\n"
+    fin += mov_reg_from_arg(a1, "rax")
+    fin += post_syscall()
+    st.rcx = 1
+    return fin
+
+
 # Generate a token
-def gen(stat: status, tok: str) -> str:
+def gen(status: status_t, tok: str) -> str:
     tok = re.split("\\s+(?![^\\[]*\\])", tok)
     ret = ""
 
@@ -214,14 +237,10 @@ def gen(stat: status, tok: str) -> str:
         if tok[0] == "}":
             # End of raw asm segment
             status.is_in_raw = False
+            status.rcx = 1
             return (0, "\n\n; End of raw_asm segment\n\n")
-        # Load a value from ksm's memory
-        # yes, this is just renamed mov
-        if tok[0] == "ksm_load":
-            return (0, "\n" + gen_ksm_raw_mov(tok[1], tok[2]))
-        # Store into ksm's memory
-        # yes, this is the same as load
-        if tok[0] == "ksm_store":
+        # Load / store a value from ksm's memory
+        if tok[0] in ("ksm_load", "ksm_store"):
             return (0, "\n" + gen_ksm_raw_mov(tok[1], tok[2]))
         return (0, "   " + " ".join(tok) + "\n")
     else:
@@ -232,7 +251,8 @@ def gen(stat: status, tok: str) -> str:
     normal_ret = 1
     # rcx has been modified
     if status.rcx:
-        ret += "mov qword rcx, [pointer]\n"
+        ret += f"   mov qword rcx, [pointer]\n"
+        status.rcx = 0
     # regular instructions
     if tok[0] == "mov":
         ret += gen_mov(tok[1], tok[2])
@@ -254,6 +274,8 @@ def gen(stat: status, tok: str) -> str:
         ret += gen_cmp(tok[1], tok[2])
     elif tok[0] == "hlt":
         ret += gen_hlt(tok[1])
+    elif tok[0] == "open_file":
+        ret += gen_open_file(status, tok[1], tok[2])
     elif tok[0] == "print_string":
         # TLDR: This, in order: Joins the remaining tokens that were split earlier, 
         # removes the first one, which is the command, then removes the first and last char
@@ -261,11 +283,11 @@ def gen(stat: status, tok: str) -> str:
         tok = [tok[0], " ".join(tok[1:len(tok)])[1:-1]]
         ret += gen_print_string(status, tok[1])
     elif tok[0] == "print_newline":
-        ret += gen_print_newline()
+        ret += gen_print_newline(status)
     elif tok[0] in ("pop", "peek", "push"):
         ret += gen_stack(tok[1], tok[0])
     elif tok[0] in ("print_int", "print_hex"):
-        ret += gen_print_int(tok[1], tok[0])
+        ret += gen_print_int(status, tok[1], tok[0])
     elif tok[0] in ("jmp", "je", "jne", "jg", "jl"):
         # jumps are already correct asm syntax ( i wonder why... )
         ret += " ".join(tok) + "\n"

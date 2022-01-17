@@ -6,7 +6,7 @@ def main():
     data = data.replace(",", "")
     data = data.split("\n")
     print(data)
-    status = generate_asm.status(0, 0)
+    status = generate_asm.status_t(0, 0)
     nasm_code = ""
     data_section = ""
     nasm_code += generate_asm.prelude(int(sys.argv[2]))

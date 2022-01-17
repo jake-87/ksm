@@ -129,7 +129,7 @@ raw_asm
 - - Prints a number in hex form to stdout.
 <br>
 
-- open_file n, dest
+- open_file dest, n
 - - Opens the nth argument of the program, places fp in dest.
 <br>
 

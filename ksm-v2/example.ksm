@@ -12,3 +12,4 @@ print_int [123]
 print_hex [123]
 print_newline
 print_string "one two three four"
+open_file r9, [m10]
