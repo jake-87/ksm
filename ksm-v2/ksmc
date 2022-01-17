@@ -9,7 +9,7 @@ def run_command(args: list):
     stdout = ret.stdout.decode("utf-8")
     stderr = ret.stderr.decode("utf-8")
     if stderr.strip():
-        print(stderr)
+        print("Command", args, f"\n threw errors:\n", stderr)
         exit(1)
     return stdout
 def main():
@@ -50,11 +50,11 @@ def main():
             f.write(stdout)
 
         # Compile the helper
-        stdout = run_command(["cc", "compiler-src/helpers.c", "-o", "tmp/helpers.o", "-c", "-Wall", "-Wextra"])
+        stdout = run_command(["cc", "compiler-src/helpers.c", "-o", "tmp/helpers.o", "-c", "-Wall", "-Wextra", "-fPIC"])
         if stdout.strip():
             print(stdout)
-        
-        stdout = run_command(["nasm", "-f", "elf64", "tmp/output.nasm", "-F", "dwarf", "-o", "tmp/output.o"])
+
+        stdout = run_command(["nasm", "-f", "elf64", "tmp/output.nasm", "-o", "tmp/output.o"])
         if stdout.strip():
             print(stdout)
         if len(sys.argv) == 3:
@@ -64,5 +64,7 @@ def main():
         stdout = run_command(["cc", "-o", output, "tmp/output.o", "tmp/helpers.o", "-static"])
         if stdout.strip():
             print(stdout)
+        
+        stdout = run_command(["rm", "-rf", "./tmp"])
 if __name__ == "__main__":
     main()

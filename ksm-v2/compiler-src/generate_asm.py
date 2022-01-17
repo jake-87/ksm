@@ -188,12 +188,13 @@ def gen_print_int(st: status_t, a1: str, print: str) -> str:
 # Print a string
 def gen_print_string(st: status_t, a1: str) -> str:
     fin = ["", ""]
+    fixed = a1.replace('\\n', '", 0xa, "')
     fin[1] += pre_syscall()
-    better_a1 = "_".join(a1.split(" ")) + "__KSM_INTERNAL"
+    better_a1 = "_".join(a1.replace("\\n", "__").split(" ")) + "__KSM_INTERNAL"
     # If we don't already have the string, make it
     if better_a1 not in st.strings:
         st.strings[better_a1] = better_a1
-        fin[0] += f'    _{better_a1}_: db "{a1}"\n'
+        fin[0] += f'    _{better_a1}_: db "{fixed}", 0\n'
         # honestly couldn't tell you if this is needed, but i *think* it is
     fin[1] += f"   mov qword rdi, _{better_a1}_\n"
     fin[1] += f"   call print_string\n"
