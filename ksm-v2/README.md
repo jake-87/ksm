@@ -9,3 +9,12 @@ This assembler is written in python, and outputs nasm assembly code. This code m
 ## cursed.py
 
 Don't.
+
+## TODO:
+
+- [ ] Control structures
+- - [ ] if
+- - [ ] else
+- - [ ] while
+- - [ ] do while
+- [ ] Functions
