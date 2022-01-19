@@ -18,3 +18,4 @@ Don't.
 - - [ ] while
 - - [ ] do while
 - [ ] Functions
+- [ ] Refactor variables to classes
